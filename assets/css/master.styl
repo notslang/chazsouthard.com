@@ -58,14 +58,19 @@ nav
 	background-size 60% 
 
 section
+	position relative
 	line-height 30px
 	background gray
 	padding 20px
+	margin 20px
 
 	h1
 		text-transform uppercase
 
-	&.text
+	&.text:after
 		//I'm just gonna say that this is the class that gets an emblem at the
 		//bottom... I'll prolly come up with a better selector later
-		
+		content ''
+		display inline-block
+		size 100% 50px
+		background url('/img/moon.svg') no-repeat 100%
