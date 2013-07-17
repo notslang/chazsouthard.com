@@ -1,37 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-    <meta name="viewport" content="width=device-width">
-    <meta name="description" content="description of your site">
-    <meta name="author" content="author of the site">
-    <link rel="icon" href="/favicon.png">
-    <link rel="stylesheet" href="css/master.css">
-    <title>Chaz Southard</title>
-  </head>
-  <body>
-    <nav><a id="logo"></a>
-      <ul>
-        <li><a>Chaz</a></li>
-        <li><a>Portfolio</a></li>
-        <li><a>About</a></li>
-        <li><a>Blog</a></li>
-        <li><a>Contact</a></li>
-      </ul>
-    </nav>
-<section class="text"><h1>Color is Alive</h1>
+<!DOCTYPE html><html><head><meta charset="utf8"><meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="viewport" content="width=device-width"><meta name="description" content="description of your site"><meta name="author" content="author of the site"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="css/master.css"><link href="http://fonts.googleapis.com/css?family=Didact+Gothic" rel="stylesheet" type="text/css"><link href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" rel="stylesheet" type="text/css"><title>Chaz Southard</title></head><body><nav><a id="logo"></a><ul><li><a>Chaz</a></li><li><a>Portfolio</a></li><li><a>About</a></li><li><a>Blog</a></li><li><a>Contact</a></li></ul></nav><section class="text"><h1>Color is Alive</h1>
 <blockquote>
 <p>In the dawn, armed with a burning patience, we shall enter the splendid Cities.
 - Arthur Rimbaud</p>
 </blockquote>
-
-</section>
-<section>
-  <p>this file can be found in views/index.jade</p><p>For help and documentation, check out <a href="http://roots.cx"><a href="http://roots.cx">http://roots.cx</a></a></p>
-
-</section>
-    <script data-main="js/main" src="js/require.js"></script><script>protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://'; address = protocol + window.location.host + window.location.pathname + '/ws'; socket = new WebSocket(address);
+</section><section><p>this file can be found in views/index.jade</p><p>For help and documentation, check out <a href="http://roots.cx"><a href="http://roots.cx">http://roots.cx</a></a></p>
+</section><script data-main="js/main" src="js/require.js"></script><script>protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://'; address = protocol + window.location.host + window.location.pathname + '/ws'; socket = new WebSocket(address);
 socket.onmessage = function(msg) {
   msg.data == 'reload' && window.location.reload();
   if (msg.data == 'compiling'){ 
@@ -208,6 +181,4 @@ socket.onmessage = function(msg) {
     <div id="l8"></div>
   </div>
 </div>
-
-  </body>
-</html>
+</body></html>
