@@ -365,8 +365,8 @@ section.text:after {
   background: url("/img/moon.svg") no-repeat 100%;
 }
 #featuredImg {
-  background: #ecf0f1;
-  border: 1em #062c6c;
+  background: url("/img/rogue.png") no-repeat center;
+  padding: 20px;
   display: inline-block;
 }
 #footer {
