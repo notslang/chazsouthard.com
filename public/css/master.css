@@ -1,3 +1,30 @@
+/*  
+Theme Name: Roots
+Theme URI: http://
+Description: A minimal and responsive Roots & WordPress portfolio theme.
+Version: 1.0
+Author: Sean Land and C. Southard
+Author URI: http://
+Tags: portfolio, responsive, blog, clean, minimal, white, two-columns, threaded-comments, translation-ready, custom-menus
+
+TABLE OF CONTENTS
+
+01 - Reset
+02 - Global Variabes
+03 - General Layout
+04 - Header
+05 - Content
+06 - Slideshow
+07 - Sidebar
+08 - Widgets
+09 - Comments
+10 - Pagination
+11 - Footer
+12 - Media Queries
+*/
+/* ///////////////////////////////////////////////////////////////////// 
+//  01 - Reset
+/////////////////////////////////////////////////////////////////////*/
 article,
 aside,
 details,
@@ -249,6 +276,9 @@ body {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
+/* ///////////////////////////////////////////////////////////////////// 
+//  02 -  Global Variables
+/////////////////////////////////////////////////////////////////////*/
 nav,
 h1,
 h2,
@@ -261,10 +291,14 @@ h6 {
 p {
   font-family: 'Didact Gothic', sans-serif;
 }
+/* ///////////////////////////////////////////////////////////////////// 
+//  03 -  Layout
+/////////////////////////////////////////////////////////////////////*/
 nav {
   position: relative;
   background: #062c6c;
   line-height: 100px;
+  font-size: 1em;
 }
 nav ul,
 nav li {
@@ -329,4 +363,13 @@ section.text:after {
   width: 100%;
   height: 50px;
   background: url("/img/moon.svg") no-repeat 100%;
+}
+#featuredImg {
+  background: #ecf0f1;
+  border: 1em #062c6c;
+  display: inline-block;
+}
+#footer {
+  background: #fff;
+  font-size: 3em;
 }

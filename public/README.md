@@ -1,4 +1,1 @@
-chazsouthard.com
-================
-
-The portfolio of Chaz Southard
+/Users/oldpuppet/Sites/gh-server-config/chazsouthard.com/README.md
