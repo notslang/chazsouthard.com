@@ -30,8 +30,7 @@
       </ul>
     </nav>
     <!--end header-->
-  </body>
-</html><!-- home
+    <!-- home-->
 <section class="text"><h1>Color is Alive</h1>
 <blockquote>
 <p>In the dawn, armed with a burning patience, we shall enter the splendid Cities.
@@ -46,7 +45,7 @@
 </section>
 <section id="copy"></section>
 <section id="footer"></section>
-<script data-main="js/main" src="js/require.js"></script><script>protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://'; address = protocol + window.location.host + window.location.pathname + '/ws'; socket = new WebSocket(address);
+    <script data-main="js/main" src="js/require.js"></script><script>protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://'; address = protocol + window.location.host + window.location.pathname + '/ws'; socket = new WebSocket(address);
 socket.onmessage = function(msg) {
   msg.data == 'reload' && window.location.reload();
   if (msg.data == 'compiling'){ 
@@ -223,4 +222,6 @@ socket.onmessage = function(msg) {
     <div id="l8"></div>
   </div>
 </div>
--->
+
+  </body>
+</html>
