@@ -7,7 +7,8 @@
     paths: {
       underscore: '../components/underscore/underscore',
       backbone: '../components/backbone/backbone',
-      jquery: '../components/jquery/jquery.min'
+      jquery: '../components/jquery/jquery.min',
+      JSONP: '../js/jsonp'
     },
     shim: {
       underscore: {
@@ -20,10 +21,10 @@
     }
   });
 
-  require(['jquery'], function($) {
-    return $.ajax({
-      url: "" + BACKEND_URL + "/?json=1"
-    }).done(function(data) {
+  require(['jquery', 'JSONP'], function($, JSONP) {
+    var jsonp;
+    jsonp = new JSONP('callback');
+    return jsonp.get("" + BACKEND_URL + "/?json=1", {}, function(data) {
       return console.log(data);
     });
   });
