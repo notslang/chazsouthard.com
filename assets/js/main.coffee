@@ -20,4 +20,14 @@ require ['jquery', 'JSONP'], ($, JSONP) ->
 
 	jsonp.get("#{BACKEND_URL}/?json=1", {}, (data) ->
 		console.log data
+		for post in data['posts']
+			$('body').append(
+				"""
+				<section>
+					<h1 class="title">#{post['title']}</h1>
+					<span class="author">by #{post['author']['name']}</span>
+					#{post['content']}
+				<section>
+				"""
+			)
 	)
