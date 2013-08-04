@@ -83,6 +83,9 @@ nav
 		&:first-child
 			padding-left 0
 
+		ul#subnav
+			display none
+
 #logo, nav
 	vertical-align middle
 
@@ -135,7 +138,8 @@ section.newsBlurp
 	position relative		
 	height 100%
 	width 100%
-    padding 20px 
+    padding 20px
+    display inline-block 
 	
 	
 
@@ -171,33 +175,28 @@ section.newsBlurp
 //  03 -  Inteior Pages
 /////////////////////////////////////////////////////////////////////*/
 
-.about
+#aboutHead
+	background grey
 
+.title
+	width 100%
+	height 650px
+	padding: 0
+	margin-top 90px
+	position relative
 
-	.Background
-		background grey
+.aboutText
+	z-index: 10
+	width: 40%
+	max-width 960px
+	min-width 400px
+	margin 0 auto
+	padding-top 65px
+	text-align center
+	line-height 1.6
 
-	.Top
-		width 100%
-		height 650px
-		padding: 0
-		margin-top 90px
-		position relative
-/* 
-	.Copy
-		z-index: 10
-		width: 40%
-		max-width 960px
-		min-width 400px
-		margin 0 auto
-		padding-top 65px
-		text-align center
-		line-height 1.6
-
-    h1
+#about.h1
 		font-size 4em
 
     p 
 		margin-top 30px
-
-*/
