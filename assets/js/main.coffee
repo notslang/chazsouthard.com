@@ -16,7 +16,7 @@ require.config(
 
 
 require ['jquery', 'JSONP'], ($, JSONP) ->
-	jsonp = new JSONP('callback')
+	jsonp = new JSONP()
 
 	jsonp.get("#{BACKEND_URL}/?json=1", {}, (data) ->
 		console.log data

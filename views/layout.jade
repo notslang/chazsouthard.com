@@ -17,16 +17,11 @@ html
     nav
         a#logo
         ul
-            li
-                a Chaz
-            li
-                a Portfolio
-            li
-                a About
-            li
-                a Blog
-            li
-                a Contact
+            for page in ['chaz', 'portfolio', 'about', 'blog', 'contact']
+                li
+                    label(for="nav_#{page}") #{page}
+                    input(id="nav_#{page}", type="radio", name="nav")
+
             .fbShare
 
                 ul#subnav

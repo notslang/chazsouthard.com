@@ -23,7 +23,7 @@
 
   require(['jquery', 'JSONP'], function($, JSONP) {
     var jsonp;
-    jsonp = new JSONP('callback');
+    jsonp = new JSONP();
     return jsonp.get("" + BACKEND_URL + "/?json=1", {}, function(data) {
       var post, _i, _len, _ref, _results;
       console.log(data);
