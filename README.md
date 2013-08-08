@@ -3,7 +3,4 @@ chazsouthard.com
 
 The portfolio of Chaz Southard
 
-
-testing
-
-hi
+*a roots.cx project that integrates with WordPress. 
