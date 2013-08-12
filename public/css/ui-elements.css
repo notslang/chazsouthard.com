@@ -1,0 +1,27 @@
+.buttonset {
+  display: inline;
+}
+.buttonset label {
+  margin-left: 0;
+  margin-right: 0;
+}
+.buttonset label:nth-child(2) {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.buttonset label:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.buttonset label a {
+  color: #fff !important;
+  text-decoration: none;
+}
+.buttonset input[type="radio"] {
+  display: none;
+  left: -1e+8px;
+  position: absolute;
+}
+.buttonset input[type="radio"]:checked + label {
+  text-decoration: underline;
+}

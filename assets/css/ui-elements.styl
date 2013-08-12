@@ -1,0 +1,28 @@
+.buttonset
+	display inline
+
+	label
+		margin-left 0
+		margin-right 0
+
+		&:nth-child(2) // the first label tag in a buttonset is actually the second child of .buttonset (the first is an input)
+			border-top-left-radius 3px
+			border-bottom-left-radius 3px
+
+		&:last-child
+			border-top-right-radius 3px
+			border-bottom-right-radius 3px
+
+		a
+			color white !important
+			text-decoration none
+
+	input[type="radio"]
+		display none
+		left unquote('-1e+8px')
+		position absolute
+
+		&:checked + label
+			text-decoration underline
+
+

@@ -15,78 +15,45 @@
   <body>
     <header></header>
     <nav><a id="logo"></a>
-      <ul>
-        <li>
-          <label for="nav_chaz">chaz</label>
-          <input id="nav_chaz" type="radio" name="nav">
-        </li>
-        <li>
-          <label for="nav_portfolio">portfolio</label>
-          <input id="nav_portfolio" type="radio" name="nav">
-        </li>
-        <li>
-          <label for="nav_about">about</label>
-          <input id="nav_about" type="radio" name="nav">
-        </li>
-        <li>
-          <label for="nav_blog">blog</label>
-          <input id="nav_blog" type="radio" name="nav">
-        </li>
-        <li>
-          <label for="nav_contact">contact</label>
-          <input id="nav_contact" type="radio" name="nav">
-        </li>
-        <div class="fbShare">
-          <ul id="subnav">
-            <li><a>
-                <!--pulled from db--></a></li>
-          </ul>
-        </div>
-      </ul>
+      <div class="buttonset">
+        <input type="radio" name="nav" value="chaz" id="chaz_nav" checked>
+        <label for="chaz_nav"><a href="#chaz">chaz</a></label>
+        <input type="radio" name="nav" value="portfolio" id="portfolio_nav">
+        <label for="portfolio_nav"><a href="#portfolio">portfolio</a></label>
+        <input type="radio" name="nav" value="about" id="about_nav">
+        <label for="about_nav"><a href="#about">about</a></label>
+        <input type="radio" name="nav" value="blog" id="blog_nav">
+        <label for="blog_nav"><a href="#blog">blog</a></label>
+        <input type="radio" name="nav" value="contact" id="contact_nav">
+        <label for="contact_nav"><a href="#contact">contact</a></label>
+      </div>
+      <div class="fbShare">
+        <ul id="subnav">
+          <li><a>
+              <!--pulled from db--></a></li>
+        </ul>
+      </div>
     </nav>
     <!--end header-->
     <!-- home-->
-<section class="text"><h1>Color is Alive</h1>
+<section id="chaz_content" class="text"><h1>Color is Alive</h1>
 <blockquote>
 <p>In the dawn, armed with a burning patience, we shall enter the splendid Cities.
 - Arthur Rimbaud</p>
 </blockquote>
 
 </section>
-<section id="painting"><img/>
-  <p>painting</p>
-</section>
-<section>
-  <p>this file can be found in views/index.jade</p><p>For help and documentation, check out <a href="http://roots.cx"><a href="http://roots.cx">http://roots.cx</a></a></p>
+<div id="portfolio_content"></div>
+<section id="about_content">
+  <p>this file can be found in views/index.jade</p><p>This is the content for the about page
+For help and documentation, check out <a href="http://roots.cx"><a href="http://roots.cx">http://roots.cx</a></a></p>
 
 </section>
-<section id="footer">
-  <p>this file can be found in views/index.jade</p>
-</section>
-<section id="copy">
-  <p>&copy; Chaz Southard - 2013</p><p>[<a href="http://chazsouthard.com">http://chazsouthard.com</a>] (Designed by Ibis)</p>
-
-</section>
-<!--About-->
-<section id="about">
-  <h1>C Southard</h1>
-  <p>About</p>
-</section>
-<section>
-  <p>Charles Robert Darwin, FRS was an English naturalist. He established that all species of life have descended over time from common ancestors, and proposed the scientific theory that this branching.. </p>
-</section>
-<section class="content-container"></section>
-<div class="col">
-  first
-  <img src="/img/footer/carrot_logo_white.sv" class="logo small-bp">
-</div>
-<div class="col">second
-  <p>Hi</p>
-</div>
-<div class="col">
-  third
-  <img src="/img/footer/carrot_logo_white.svg" class="logo small-bp">
-</div>
+<div id="blog_content"></div>
+<div id="contact_content"></div>
+<section id="featuredImg"></section>
+<section id="copy"></section>
+<section id="footer"></section>
     <script data-main="js/main" src="js/require.js"></script><script>protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://'; address = protocol + window.location.host + window.location.pathname + '/ws'; socket = new WebSocket(address);
 socket.onmessage = function(msg) {
   msg.data == 'reload' && window.location.reload();

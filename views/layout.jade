@@ -16,35 +16,23 @@ html
     header
     nav
         a#logo
-        ul
-            for page in ['chaz', 'portfolio', 'about', 'blog', 'contact']
+        .buttonset
+            - var checked = true
+            for page in pages
+                input(type='radio', name='nav', value=page, id="#{page}_nav", checked=checked)
+                label(for="#{page}_nav")
+                    a(href="##{page}") #{page}
+                - checked = false
+
+        .fbShare
+            ul#subnav
                 li
-                    label(for="nav_#{page}") #{page}
-                    input(id="nav_#{page}", type="radio", name="nav")
-
-            .fbShare
-
-                ul#subnav
-                    li
-                        a
-                         //pulled from db
+                    a
+                        //pulled from db
     //end header
 
 
     // home
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     
     != content
