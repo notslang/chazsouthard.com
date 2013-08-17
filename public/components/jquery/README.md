@@ -1,1 +1,1 @@
-/Users/oldpuppet/Sites/gh-server-config/chazsouthard.com/assets/components/jquery/README.md
+/usrdata/web/chazsouthard.com/assets/components/jquery/README.md
