@@ -1,5 +1,7 @@
+# this points to the server that's holding all our content in wordpress
 BACKEND_URL = 'http://69.55.49.53'
 
+# this is require.js stuff for loading JS libraries
 require.config(
 	paths:
 		underscore: '../components/underscore/underscore'
@@ -14,12 +16,15 @@ require.config(
 			exports: 'Backbone'
 )
 
-
+# get the libraries and then call the function
 require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
+	# now that jquery, jsonp, and backbone are loaded, init JSONP
 	jsonp = new JSONP()
 
+	# get all the content on the homepage as JSON and then call the function with the data
 	jsonp.get("#{BACKEND_URL}/?json=1", {}, (data) ->
 		console.log data
+		# loop through the data and make a section for each post, and append it to the body (for now)
 		for post in data['posts']
 			$('body').append(
 				"""
@@ -38,7 +43,8 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 			txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
 
 	###*
-	 * modify the navbar to highlight the correct current page
+	 * modify the navbar to highlight the correct current page.
+	 * this view just manages the navbar at the top of the page
 	###
 	class NavView extends Backbone.View
 		el: $ 'nav .buttonset'  # element already exists in markup
@@ -60,6 +66,7 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 			@model.on('change:selected', @render)
 
 
+	# the router makes the backbuttons work (since we're not really going to another page, we are just loading new content for the page we are on). also it deals with firing events when the url hash is changed
 	class Router extends Backbone.Router
 		# forward changes in the route to the navigation view
 		routes:
@@ -71,14 +78,12 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 		initialize: (options) ->
 			# assign a model during init like in a view
 			@model = options.model
-
-
+	
+	# this is a model that represents a single page... it's basically just used to hold the name and if it is selected or not 
 	class Page extends Backbone.Model
 		defaults:
 			name: ''
-			login_required: false
 			selected: false # value used by Pages for changing the active page
-			progressbar: false
 
 			# bind-able functions... empty by default
 			first_load: (->)
@@ -102,7 +107,7 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 			# for page specific init functions
 			@get('first_load').call()
 
-
+	# this is a view that's connected to the page model... it just deals with hiding the content of pages that we are not on, and showing the content of the page that we are on
 	class PageView extends Backbone.View
 		render: ->
 			if @model.get('selected')
@@ -117,7 +122,7 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 			@model.view = @
 			@el = $("\##{@model.get('name')}_content")[0]
 
-
+	# this is a collection of all the pages in the application... it deals with changing the current page when the url changes
 	class PagesCollection extends Backbone.Collection
 		# to determine what should be rendered in the navbar on any given page
 		model: Page
@@ -160,17 +165,20 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 			_.bindAll @
 			@on("add", @added_page)
 
-
+	
+	#create all the models & views in the application
 	window.pages = new PagesCollection()
 	window.router = new Router model: pages
 	window.navView = new NavView model: pages
 
 	for page in ['chaz', 'portfolio', 'about', 'blog', 'contact']
+		# loop through all the pages we want, making a model for each one
 		pages.create(
 			name: page
 		)
 
 	Backbone.history.start()
+
 	# change to default page at startup (if there is no hash fragment)
 	if Backbone.history.fragment is ''
 		App.Router.navigate(pages.default_page,
