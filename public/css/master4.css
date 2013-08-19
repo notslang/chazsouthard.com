@@ -691,37 +691,70 @@ section #content a {
 section #content a:hover {
   border-bottom: 1px solid #d5572e;
 }
+/*section.news-container
+    //position: relative
+    display: inline-block
+    border 2px solid slate
+    size 20% 20%
+    group ()
+
+  div#news-box
+    border 2px solid slate
+    position relative
+    padding 30px
+    background gray
+   // size 33% 33%
+    group ()
+        
+  div.news-title
+    letter-spacing 1px
+    color slate
+    p
+      font-size .8em
+      group()
+*/
+/*#metabox
+  position relative
+  color #fff
+  display inline-block
+  height:450px
+  width:250px
+  background: gray url('/img/rogue.jpg') center center no-repeat
+  background-size: 200px 200px
+  group ()
+*/
 #metabox {
-  position: relative;
   display: inline-block;
-  float: right;
-  height: 300px;
-  width: 300px;
-  margin-right: 40px;
-  background: #ecf0f1;
-  -webkit-background-size: 100px 100px;
-  -moz-background-size: 100px 100px;
-  -o-background-size: 100px 100px;
-  -ms-background-size: 100px 100px;
-  background-size: 100px 100px;
+  height: 450px;
+  width: 400px;
+  background: #192d35;
+  background: #ecf0f1 url("/img/rogue.jpg") center center no-repeat;
+  -webkit-background-size: 200px 200px;
+  -moz-background-size: 200px 200px;
+  -o-background-size: 200px 200px;
+  -ms-background-size: 200px 200px;
+  background-size: 200px 200px;
+  zoom: 1;
 }
-#metabox group () .moon {
-  display: inline-block;
+#metabox:before,
+#metabox:after {
+  content: "";
+  display: table;
 }
-#metabox position relative {
-  background: url("/img/moon.svg") no-repeat 100%;
+#metabox:after {
+  clear: both;
 }
 #picture-drip {
   display: inline-block;
-  height: 600px;
-  width: 600px;
+  height: 450px;
+  width: 400px;
   background: #192d35;
   background: #ecf0f1 url("/img/rogue.jpg") center center no-repeat;
-  -webkit-background-size: 560px 560px;
-  -moz-background-size: 560px 560px;
-  -o-background-size: 560px 560px;
-  -ms-background-size: 560px 560px;
-  background-size: 560px 560px;
+  -webkit-background-size: 200px 200px;
+  -moz-background-size: 200px 200px;
+  -o-background-size: 200px 200px;
+  -ms-background-size: 200px 200px;
+  background-size: 200px 200px;
   zoom: 1;
 }
 #picture-drip:before,
@@ -732,102 +765,8 @@ section #content a:hover {
 #picture-drip:after {
   clear: both;
 }
-#picture-title {
-  height: 20px;
-  background: none;
-  margin-top: -50px;
-}
-#picture-title p {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: #192d35;
-  text-align: left;
-  padding-left: 250px;
-  text-transform: uppercase;
-}
-#portfolio_content .image {
-  zoom: 1;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-#portfolio_content .image:before,
-#portfolio_content .image:after {
-  content: "";
-  display: table;
-}
-#portfolio_content .image:after {
-  clear: both;
-}
-#portfolio_content .image li {
-  float: left;
-  margin-right: 30px;
-  list-style-type: none;
-}
-#portfolio_content .image li:last-child {
-  margin-right: 0;
-}
-li {
-  position: relative;
-  cursor: pointer;
-  -webkit-transition: all .3s ease;
-  -moz-transition: all .3s ease;
-  -o-transition: all .3s ease;
-  -ms-transition: all .3s ease;
-  transition: all .3s ease;
-  width: 166px;
-}
-&:hover {
-  -webkit-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
-  -moz-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
-  -o-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
-  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
-  opacity: 0.8;
-}
-.img {
-  background: #ccc;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  -o-border-radius: 4px;
-  -ms-border-radius: 4px;
-  border-radius: 4px;
-  width: 140px;
-  height: 140px;
-}
-.img background-size: 140px140px.gs {
-  background: url("t1.png") no-repeat;
-}
-.img background-size: 140px140px.structure {
-  background: url("t2.png") no-repeat;
-}
-.img background-size: 140px140px.axiscss {
-  background: url("t3.jpg") no-repeat;
-}
-.img background-size: 140px140px.dynamic {
-  background: url("t4.jpg") no-repeat;
-}
-.img background-size: 140px140px.precompiled {
-  background: url("t5.jpg") no-repeat;
-}
-.play {
-  background: url("play.png") no-repeat;
-}
-size: 4650 {
-  -webkit-background-size: 46px 50px;
-  -moz-background-size: 46px 50px;
-  -o-background-size: 46px 50px;
-  -ms-background-size: 46px 50px;
-  background-size: 46px 50px;
-  position: absolute;
-  top: 47px;
-  left: 48px;
-}
-p {
-  text-align: left;
-}
-p fs: 12px {
-  font-weight: bold;
+#copy {
+  background: #328bde;
 }
 /* Footer
 -----------------------------------------------------------------------------*/

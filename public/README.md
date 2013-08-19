@@ -1,1 +1,1 @@
-/usrdata/web/chazsouthard.com/README.md
+/Users/oldpuppet/Sites/gh-server-config/chazsouthard.com/README.md

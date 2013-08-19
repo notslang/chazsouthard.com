@@ -1,26 +1,65 @@
 section.text#chaz_content
-  :markdown
-    #Color is Alive
+	:markdown
+		#Color is Alive
 
-    > In the dawn, armed with a burning patience, we shall enter the splendid Cities.
-    - Arthur Rimbaud
+		> In the dawn, armed with a burning patience, we shall enter the splendid Cities.
+		- Arthur Rimbaud
+
+//section.news-container
+	div.news-box
+		artical.news-item
+			h2.news-title Title 
+			p this will be metabox for news
+
+section#metabox
+	h2 Color is life
+	p In the dawn, armed with a burning patience, we shall enter the splendid Cities. - Arthur Rimbaud
+	.moon
+
+section#picture-drip
+
+section#picture-title
+	p picture title
+
+hr
+ 
+section#about_content
+	p this file can be found in views/index.jade
+	:markdown
+		This is the content for the about page
+		For help and documentation, check out [http://roots.cx](http://roots.cx)
+hr
+
 
 #portfolio_content
+  p Portfolio  
 
-section#about_content
-  p this file can be found in views/index.jade
+  ul.image
+		li
+		  a(href='http://youtu.be/47Qv6djtKlY')
+			  .play
+		  	.vid.gs
+					p Image 1
+		li
+			a(href='http://youtu.be/V168sgPqIp0')
+			  .play
+				.vid.structure
+				p Image 2
+		li
+		  a(href='http://youtu.be/Kv6H6mMDeuA')
+				.play
+				.vid.axiscss
+				p Image 3
+		li
+			a(href='http://youtu.be/Y7_WILKNAUE')
+				.play
+				.vid.dynamic
+				p Image 4
+		li
+			a(href='http://www.youtube.com/watch?v=_lPLVd0UsdI')					.play
+				.play
+				.vid.precompiled
+				p Image 5
 
-  :markdown
-    This is the content for the about page
-    For help and documentation, check out [http://roots.cx](http://roots.cx)
 
-#blog_content
-
-#contact_content
-
-section#featuredImg
-
-
-section#copy
-section#footer
-
+section#blog_content 

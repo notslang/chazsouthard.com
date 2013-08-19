@@ -1,0 +1,267 @@
+normalize()
+base()
+buttons()
+flash-notices()
+// this is actually a practice worth noting. By using variables, I can
+// override normal color names with specific shades of a given color. And by
+// assigning names, I can insure that there are no weird "slightly-off"
+// versions of a color. Also, it makes the CSS much more readable.
+
+@import 'ui-elements'
+@import 'settings'
+// colors
+blue = #062C6C
+ltblue = #328bde
+gray = #ECF0F1
+ltgray = #7f7f7f
+orange = #D5572E
+slate = #192d35
+
+// dims
+logo_height = 100px
+
+// responsive
+img, object, embed, audio, video
+  max-width:100%
+
+//grid
+
+grid()
+  column-width = 60px
+  gutter-width = 20px
+  columns = 12
+  total-width = 100%
+
+//globals
+body
+  border-top: 7px solid orange
+  position: relative
+  background: #f6f8fb
+  overflow-x: hidden
+  -webkit-animation: fadeIn 1s 
+
+strong
+  font-weight: 600
+
+hr
+  border 2px solid slate
+  border-top none
+
+header
+  group()
+  padding 0
+  max-width 1200px
+
+  .title 
+    font-size 3em
+//basic typography
+nav, h1, h2, h3, h4, h5, h6
+	font-family: 'Yanone Kaffeesatz', sans-serif
+
+p
+	font-family: 'Didact Gothic', sans-serif;
+
+// layout 
+nav
+	position relative
+	background ltblue
+	border-bottom 10px solid slate
+	line-height logo_height
+	font-size (logo_height / 6)
+
+	label
+		text-transform uppercase
+		color white
+		padding-left 10px
+		font-weight bold
+
+		&:first-child
+			padding-left 0
+
+#logo, nav
+	vertical-align middle
+
+#logo
+	logo_padding = (logo_height / 6)
+	content_size = logo_height - 2 * logo_padding
+	size content_size
+	border-radius 50%
+	display inline-block
+	box-sizing border-box
+	padding logo_padding
+	margin logo_padding
+
+	//a 1px border would look choppy... using a shadow gives us a slight
+	//antialiasing effect
+	box-shadow 0 0 2px 1px orange 
+
+	//the background image is really only the weird shape in the middle, the
+	//surrounding circle can be made with pure css, bringing our image size
+	//down to 1.6 kb - enough to be base64'ed and inlined. And that means 1
+	//less http request & faster page load time
+	background url('/img/logo.png') no-repeat center
+	background-size 60% 
+
+// Document setup
+section
+	position relative
+	line-height 30px
+	background gray
+	padding 20px
+	margin 20px
+
+	h1
+		text-transform uppercase
+
+	&.text:after
+		//I'm just gonna say that this is the class that gets an emblem at the
+		//bottom... I'll prolly come up with a better selector later
+		content ''
+		display inline-block
+		position relative
+		size 40% 50px
+		background url('/img/moon.svg') no-repeat 100%
+    group()
+
+ //Main Content
+ #content
+  max-width:960px;
+  padding: 0 40px
+  margin: 0 auto
+  margin-bottom: 50px
+
+  &.docs
+    padding-left: 260px
+    padding-right: 0
+    max-width: 700px
+
+  h3
+    font-weight: normal
+    color: #333
+    font-size: 2em
+    margin-bottom: 15px
+    margin-top: 25px
+
+  h5
+    font-weight: normal
+    color: #333
+    font-size: 1.3em
+    margin-bottom: 10px
+    padding-bottom: 3px
+    border-bottom: 1px solid rgba(#000,.1)
+
+  blockquote
+    border-left: 3px solid orange
+    margin-left: 0
+    padding-left: 15px
+    italic()
+
+  p
+    color: #5e5e5e
+    font-size: 16px
+    line-height: 1.6em
+
+  ul
+    color: #5e5e5e
+    font-size: 16px
+    line-height: 1.6em
+
+  a
+    color: blue
+    text-decoration: none
+    transition()
+    border-bottom: 1px solid transparent
+    font-weight: 500
+
+    &:hover
+      border-bottom: 1px solid orange
+
+ // News Metabox Section
+     
+/*section.news-container
+    //position: relative
+    display: inline-block
+    border 2px solid slate
+    size 20% 20%
+    group ()
+
+  div#news-box
+    border 2px solid slate
+    position relative
+    padding 30px
+    background gray
+   // size 33% 33%
+    group ()
+        
+  div.news-title
+    letter-spacing 1px
+    color slate
+    p
+      font-size .8em
+      group()
+*/
+
+/*#metabox
+  position relative
+  color #fff
+  display inline-block
+  height:450px
+  width:250px
+  background: gray url('/img/rogue.jpg') center center no-repeat
+  background-size: 200px 200px
+  group ()
+*/
+
+#metabox
+  //position absolute 0 12% 0 0 
+  //width 40px
+  display inline-block
+  height:450px
+  width: 400px
+  background slate
+  background: gray url('/img/rogue.jpg') center center no-repeat
+  background-size: 200px 200px
+  group ()
+
+// Right Picture
+#picture-drip
+  //position absolute 0 12% 0 0 
+  //width 40px
+  display inline-block
+  height:450px
+  width: 400px
+  background slate
+  background: gray url('/img/rogue.jpg') center center no-repeat
+  background-size: 200px 200px
+  group ()
+
+#copy
+  background ltblue
+
+/* Footer
+-----------------------------------------------------------------------------*/
+footer
+  width 100%
+  height:250px
+  background slate
+  font-size 1em
+  background: lighten(slate, 30%) url('/img/logo2.png') center center no-repeat
+  background-size: 100px 100px
+  
+  p
+  color white
+  font-size 1.4em
+  text-align center
+  padding-top 20px
+
+/* Animations and Responsive
+-----------------------------------------------------------------------------*/
+/*@keyframes fadeIn
+  0%
+    opacity: 0
+  100%
+    opacity: 1
+
+//@import "adaptive"
+
+

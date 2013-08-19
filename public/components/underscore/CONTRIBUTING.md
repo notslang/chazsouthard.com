@@ -1,1 +1,1 @@
-/usrdata/web/chazsouthard.com/assets/components/underscore/CONTRIBUTING.md
+/Users/oldpuppet/Sites/gh-server-config/chazsouthard.com/assets/components/underscore/CONTRIBUTING.md

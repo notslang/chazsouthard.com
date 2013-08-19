@@ -43,7 +43,8 @@
       });
     };
     /**
-    	 * modify the navbar to highlight the correct current page
+    	 * modify the navbar to highlight the correct current page.
+    	 * this view just manages the navbar at the top of the page
     */
 
     NavView = (function(_super) {
@@ -107,9 +108,7 @@
 
       Page.prototype.defaults = {
         name: '',
-        login_required: false,
         selected: false,
-        progressbar: false,
         first_load: (function() {}),
         on_load: (function() {}),
         on_unload: (function() {})
