@@ -1,1 +1,5 @@
-/Users/oldpuppet/Sites/gh-server-config/chazsouthard.com/assets/components/underscore/.travis.yml
+language: node_js
+node_js:
+  - 0.8
+notifications:
+  email: false

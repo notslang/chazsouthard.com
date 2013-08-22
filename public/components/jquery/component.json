@@ -1,1 +1,15 @@
-/Users/oldpuppet/Sites/gh-server-config/chazsouthard.com/assets/components/jquery/component.json
+{
+  "name": "jquery",
+  "repo": "components/jquery",
+  "version": "2.0.3",
+  "description": "jQuery component",
+  "keywords": [
+    "jquery",
+    "component"
+  ],
+  "main": "jquery.js",
+  "scripts": [
+    "jquery.js"
+  ],
+  "license": "MIT"
+}

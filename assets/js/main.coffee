@@ -23,18 +23,17 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 
 	# get all the content on the homepage as JSON and then call the function with the data
 	jsonp.get("#{BACKEND_URL}/?json=1", {}, (data) ->
-		console.log data
 		# loop through the data and make a section for each post, and append it to the body (for now)
 		for post in data['posts']
-			$('body').append(
-				"""
-				<section>
-					<h1 class="title">#{post['title']}</h1>
-					<span class="author">by #{post['author']['name']}</span>
-					#{post['content']}
-				<section>
-				"""
-			)
+			console.log post
+			console.log $('#blog-content')
+			$('#blog_content').append("""
+			<section>
+				<h1 class="title">#{post['title']}</h1>
+				<span class="author">by #{post['author']['name']}</span>
+				#{post['content']}
+			</section>
+			""")
 	)
 
 	#general functions
@@ -57,7 +56,7 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 
 			# ensure that the correct navbar button is selected... since it is
 			# a radio button, it unselects anything else
-			@$el.find("\##{page}_nav").attr "checked", true
+			@$el.find("\##{page}_nav").prop "checked", true
 
 			console.log "(nav) page: #{page}"
 
@@ -121,6 +120,7 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 			@model.on('change:selected', @render)
 			@model.view = @
 			@el = $("\##{@model.get('name')}_content")[0]
+			@render()
 
 	# this is a collection of all the pages in the application... it deals with changing the current page when the url changes
 	class PagesCollection extends Backbone.Collection

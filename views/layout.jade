@@ -17,25 +17,15 @@ html
     nav
         a#logo
         .buttonset
-            - var checked = true
+            - checked = true
             for page in pages
                 input(type='radio', name='nav', value=page, id="#{page}_nav", checked=checked)
                 label(for="#{page}_nav")
                     a(href="##{page}") #{page}
                 - checked = false
 
-        .fbShare
-            ul#subnav
-                li
-                    a
-                        //-pulled from db
-    //-end header
-
-
-    // home
-    
-    
     != content
+
     footer  
       p © Chaz Southard 2013
     //- add other scripts through require.js, not here

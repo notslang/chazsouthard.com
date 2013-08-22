@@ -1,1 +1,8 @@
-/Users/oldpuppet/Sites/gh-server-config/chazsouthard.com/assets/components/backbone/bower.json
+{
+  "name": "backbone",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/documentcloud/backbone.git"
+  }
+}

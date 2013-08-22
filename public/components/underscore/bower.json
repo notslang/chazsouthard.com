@@ -1,1 +1,8 @@
-/Users/oldpuppet/Sites/gh-server-config/chazsouthard.com/assets/components/underscore/bower.json
+{
+  "name": "underscore",
+  "version": "1.4.4",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/documentcloud/underscore.git"
+  }
+}

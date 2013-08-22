@@ -1,1 +1,84 @@
-/Users/oldpuppet/Sites/gh-server-config/chazsouthard.com/assets/css/forms.style
+input
+	border none
+
+	&[type=submit], &[type=button]
+		background none
+		color #555
+		padding 10px 20px
+
+		&:hover
+			color #333
+			transition-duration .3s
+
+#cf_custom
+	span.wpcf7-not-valid-tip
+		left: 70%
+		margin-top: 50px
+		position: relative
+		top: 20%
+
+	div.wpcf7-validation-errors
+		margin-top:50px
+
+form
+	font-size 0
+
+	br
+		display none
+
+	*
+		font-family: 'Sans-Serif'
+		text-transform uppercase
+		margin 0
+		padding 0
+
+	p
+		margin-bottom 0 !important
+
+input, textarea, select, button
+	width 100%
+	font-size: 26px
+	display inline-block
+	text-transform: uppercase
+	padding 6px
+	border none
+	font-weight: 900
+	color: #111
+	background: #fbd555
+	font-family:'Futuramc', sans-serif
+	text-transform: uppercase
+	font-weight: 900
+	box-sizing border-box
+
+	&:focus
+		border-color gold
+
+input, select, button
+	height:50px
+
+.wpcf7-form-control-wrap
+	box-sizing border-box
+	padding 10px
+	padding-right 0
+	padding-top 0
+	display inline-block
+	font-size: 26px
+	width 33.3%
+
+	@media only screen and (max-width: 800px)
+		width 100% !important
+		padding-left 0
+
+	&:first-child
+		padding-left 0
+
+	&[class*="textarea"]
+		padding 0
+		width 100% !important
+
+textarea
+	resize: vertical
+	min-height 300px
+
+.cf_custom
+	outline: 0 none

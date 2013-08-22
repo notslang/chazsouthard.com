@@ -1,1 +1,4 @@
-/Users/oldpuppet/Sites/gh-server-config/chazsouthard.com/assets/components/underscore/.npmignore
+test/
+Rakefile
+docs/
+raw/
