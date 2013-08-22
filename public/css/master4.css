@@ -796,3 +796,37 @@ footer {
 
 //@import "adaptive"
 
+ // News Metabox Section
+     
+/*section.news-container
+    //position: relative
+    display: inline-block
+    border 2px solid slate
+    size 20% 20%
+    group ()
+
+  div#news-box
+    border 2px solid slate
+    position relative
+    padding 30px
+    background gray
+   // size 33% 33%
+    group ()
+        
+  div.news-title
+    letter-spacing 1px
+    color slate
+    p
+      font-size .8em
+      group()
+*/
+/*#metabox
+  position relative
+  color #fff
+  display inline-block
+  height:450px
+  width:250px
+  background: gray url('/img/rogue.jpg') center center no-repeat
+  background-size: 200px 200px
+  group ()
+*/

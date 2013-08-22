@@ -600,7 +600,7 @@ nav {
   -o-box-shadow: 0 0 2px 1px #d5572e;
   -ms-box-shadow: 0 0 2px 1px #d5572e;
   box-shadow: 0 0 2px 1px #d5572e;
-  background: url("/img/logo.png") no-repeat center;
+  background: url("/img/logo2.png") no-repeat center;
   -webkit-background-size: 60%;
   -moz-background-size: 60%;
   -o-background-size: 60%;
@@ -694,7 +694,7 @@ section #content a:hover {
 #metabox {
   position: relative;
   display: inline-block;
-  float: right;
+  float: left;
   height: 300px;
   width: 300px;
   margin-right: 40px;
@@ -704,11 +704,20 @@ section #content a:hover {
   -o-background-size: 100px 100px;
   -ms-background-size: 100px 100px;
   background-size: 100px 100px;
+  zoom: 1;
 }
-#metabox group () .moon {
+#metabox:before,
+#metabox:after {
+  content: "";
+  display: table;
+}
+#metabox:after {
+  clear: both;
+}
+.moon {
   display: inline-block;
 }
-#metabox position relative {
+position relative {
   background: url("/img/moon.svg") no-repeat 100%;
 }
 #picture-drip {
@@ -742,7 +751,7 @@ section #content a:hover {
   font-weight: bold;
   color: #192d35;
   text-align: left;
-  padding-left: 250px;
+  padding-left: 650px;
   text-transform: uppercase;
 }
 #portfolio_content .image {
@@ -767,7 +776,7 @@ section #content a:hover {
 #portfolio_content .image li:last-child {
   margin-right: 0;
 }
-li {
+#portfolio_content li {
   position: relative;
   cursor: pointer;
   -webkit-transition: all .3s ease;
@@ -794,46 +803,193 @@ li {
   border-radius: 4px;
   width: 140px;
   height: 140px;
+  -webkit-background-size: 140px 140px;
+  -moz-background-size: 140px 140px;
+  -o-background-size: 140px 140px;
+  -ms-background-size: 140px 140px;
+  background-size: 140px 140px;
+/*  &.gs
+		bg: 't1.png'
+
+	  &.structure
+	    bg: 't2.png'
+
+	  &.axiscss
+	    bg: 't3.jpg'
+
+	  &.dynamic
+		bg: 't4.jpg'
+
+   	  &.precompiled
+	    bg: 't5.jpg'
+
+    .play
+	  bg: 'play.png'
+	   size: 46 50
+		  background-size: 46px 50px
+		  absolute: top 47px left 48px
+  */
+  zoom: 1;
 }
-.img background-size: 140px140px.gs {
-  background: url("t1.png") no-repeat;
+.img p {
+  font-size: 12px;
 }
-.img background-size: 140px140px.structure {
-  background: url("t2.png") no-repeat;
+.img:before,
+.img:after {
+  content: "";
+  display: table;
 }
-.img background-size: 140px140px.axiscss {
-  background: url("t3.jpg") no-repeat;
+.img:after {
+  clear: both;
 }
-.img background-size: 140px140px.dynamic {
-  background: url("t4.jpg") no-repeat;
+/* About
+-----------------------------------------------------------------------------*/
+#hero {
+  width: 100%;
+  height: 500px;
+  background: #192d35;
+  color: #ecf0f1;
+  padding: 50px;
+  background: #1c323b url("/img/Bg-About.jpg") center center no-repeat;
+  -webkit-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  -ms-background-size: 100% 100%;
+  background-size: 100% 100%;
+  zoom: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-weight: normal;
+  text-align: center;
+  font-size: 3em;
+  font-size: 1.4em;
 }
-.img background-size: 140px140px.precompiled {
-  background: url("t5.jpg") no-repeat;
+#hero:before,
+#hero:after {
+  content: "";
+  display: table;
 }
-.play {
-  background: url("play.png") no-repeat;
+#hero:after {
+  clear: both;
 }
-size: 4650 {
-  -webkit-background-size: 46px 50px;
-  -moz-background-size: 46px 50px;
-  -o-background-size: 46px 50px;
-  -ms-background-size: 46px 50px;
-  background-size: 46px 50px;
-  position: absolute;
-  top: 47px;
-  left: 48px;
+/* Blog
+-----------------------------------------------------------------------------*/
+#blog {
+  width: 100%;
+  padding: 50px;
+  display: block;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 0.9;
 }
-p {
+#blog height:500px {
+  background: #fff;
+  color: #192d35;
+}
+#blog .post-date-month {
+  padding-top: 20px;
+  width: 100%;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #999;
+}
+p.blog {
+  width: 600px;
+  font-size: 1em;
+  line-height: 1.6em;
+  margin: auto;
+  padding: 40px;
+  color: #272727;
   text-align: left;
 }
-p fs: 12px {
-  font-weight: bold;
+/* Contact
+-----------------------------------------------------------------------------*/
+#contact {
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  width: 50%;
+  height: 50%;
+}
+#contact .section-title {
+  margin-top: 0;
+  text-transform: uppercase;
+  line-height: 0.9;
+  text-align: center;
+}
+input,
+textarea,
+select,
+button {
+  width: 100%;
+  font-size: 26px;
+  display: inline-block;
+  text-transform: uppercase;
+  padding: 6px;
+  border: none;
+  font-weight: 900;
+  color: #111;
+  background: #f5f5f5 url("/img/divider.png") repeat-x bottom left;
+  text-transform: uppercase;
+  font-weight: 900;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+  border-color: #ffd700;
+}
+input,
+select,
+button {
+  height: 50px;
+}
+.wpcf7-form-control-wrap {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  padding-right: 0;
+  padding-top: 30px;
+  display: block;
+  font-size: 26px;
+  width: 33.3%;
+}
+@media only screen and (max-width: 800px) {
+  .wpcf7-form-control-wrap {
+    width: 100% !important;
+    padding-left: 0;
+  }
+}
+.wpcf7-form-control-wrap:first-child {
+  padding-left: 0;
+}
+.wpcf7-form-control-wrap[class*="textarea"] {
+  padding: 0;
+  width: 100% !important;
+}
+textarea {
+  resize: vertical;
+  min-height: 300px;
+}
+.cf_custom {
+  outline: 0 none;
 }
 /* Footer
 -----------------------------------------------------------------------------*/
 footer {
   width: 100%;
-  height: 250px;
+  height: 200px;
   background: #192d35;
   font-size: 1em;
   background: #43788d url("/img/logo2.png") center center no-repeat;
@@ -845,15 +1001,28 @@ footer {
   color: #fff;
   font-size: 1.4em;
   text-align: center;
-  padding-top: 20px;
+  padding-top: 5px;
 }
 /* Animations and Responsive
 -----------------------------------------------------------------------------*/
-/*@keyframes fadeIn
-  0%
-    opacity: 0
-  100%
-    opacity: 1
-
-//@import "adaptive"
-
+@media screen and (max-width: 870px) {
+  header .title {
+    float: none;
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+  header nav {
+    margin: 0 auto;
+    width: 515px;
+    float: none;
+    text-align: center;
+  }
+}
+@media screen and (max-width: 615px) {
+  #hero ul li {
+    width: 100%;
+  }
+  header nav {
+    width: 100%;
+  }
+}
