@@ -2,13 +2,15 @@ normalize()
 base()
 buttons()
 flash-notices()
+
 // this is actually a practice worth noting. By using variables, I can
 // override normal color names with specific shades of a given color. And by
 // assigning names, I can insure that there are no weird "slightly-off"
 // versions of a color. Also, it makes the CSS much more readable.
 
-@import 'ui-elements'
-@import 'settings'
+@import '_ui-elements'
+@import '_settings'
+
 // colors
 blue = #062C6C
 ltblue = #328bde
@@ -46,7 +48,7 @@ strong
 
 hr 
 	border-top none
-	background: #f5f5f5 url('/img/divider.png') repeat-x bottom left;
+	background: #f5f5f5 url('../img/divider.png') repeat-x bottom left;
 
 header
   group()
@@ -100,7 +102,7 @@ nav
 	//surrounding circle can be made with pure css, bringing our image size
 	//down to 1.6 kb - enough to be base64'ed and inlined. And that means 1
 	//less http request & faster page load time
-	background url('/img/logo2.png') no-repeat center
+	background url('../img/logo2.png') no-repeat center
 	background-size 60% 
 
 // Document setup
@@ -121,7 +123,7 @@ section
 		display inline-block
 		position relative
 		size 40% 50px
-		background url('/img/moon.svg') no-repeat 100%
+		background url('../img/moon.svg') no-repeat 100%
     group()
 
  //Main Content
@@ -190,7 +192,7 @@ section
 	.moon
   	display inline-block
 		position relative
-		background url('/img/moon.svg') no-repeat 100%
+		background url('../img/moon.svg') no-repeat 100%
 
 // Right Picture
 #picture-drip
@@ -198,7 +200,7 @@ section
   height:600px
   width: 600px
   background slate
-  background: gray url('/img/rogue.jpg') center center no-repeat
+  background: gray url('../img/rogue.jpg') center center no-repeat
   background-size: 560px 560px
   group ()
 
@@ -254,7 +256,7 @@ section
 	   size: 46 50
 		  background-size: 46px 50px
 		  absolute: top 47px left 48px
-  */
+	*/
 	p
       fs: 12px
 	  bold()
@@ -270,7 +272,7 @@ section
   background: slate
   color gray
   padding 50px
-  background: lighten(slate, 2%) url('/img/Bg-About.jpg') center center no-repeat
+  background: lighten(slate, 2%) url('../img/Bg-About.jpg') center center no-repeat
   background-size: 100% 100%
   group()
   h2
@@ -285,26 +287,26 @@ section
 /* Blog
 -----------------------------------------------------------------------------*/
 #blog
-		width:100%
-		height:500px
-	  background: white
-	  color slate
-		padding 50px
-		display block
-		group()
+	width:100%
+	height:500px
+	background: white
+	color slate
+	padding 50px
+	display block
+	group()
 		
-			.post-date
-		  position: relative
-			left: 0
-			top: 0
-			padding-top: 20px
-			margin-left: 40px
-			width: 80px
-			height: 80px
-			background-color: slate
-			margin-bottom: 20px
-			color: #fff
-			border-radius: 100%
+	.post-date
+		position: relative
+		left: 0
+		top: 0
+		padding-top: 20px
+		margin-left: 40px
+		width: 80px
+		height: 80px
+		background-color: slate
+		margin-bottom: 20px
+		color: #fff
+		border-radius: 100%
 
 		.post-date-month
 			padding-top: 20px
@@ -312,7 +314,7 @@ section
 			letter-spacing: 2px
 			text-transform: uppercase
 			color: #999
-  h2
+	h2
 		max-width: 1400px
 		margin: 0 auto
 		font-weight: normal
@@ -336,6 +338,7 @@ section
 	position relative
 	margin 0 auto;
 	size 50%
+
 	.section-title
 		margin-top: 0
 		text-transform: uppercase
@@ -351,7 +354,7 @@ input, textarea, select, button
 	border none
 	font-weight: 900
 	color: #111
-	background: #f5f5f5 url('/img/divider.png') repeat-x bottom left;
+	background: #f5f5f5 url('../img/divider.png') repeat-x bottom left;
 	text-transform: uppercase
 	font-weight: 900
 	box-sizing border-box
@@ -391,23 +394,22 @@ textarea
 	outline: 0 none
 	padding-top 20px
 
-button(color = default, size = 'medium')
-
 /* Footer
 -----------------------------------------------------------------------------*/
+
 footer
-  width 100%
-  height:200px
-  background slate
-  font-size 1em
-  background: lighten(slate, 30%) url('/img/logo2.png') center center no-repeat
-  background-size: 100px 100px
-  
-  p
-  color white
-  font-size 1.4em
-  text-align center
-  padding-top 5px
+	width 100%
+	height:200px
+	background slate
+	font-size 1em
+	background: lighten(slate, 30%) url('../img/logo2.png') center center no-repeat
+	background-size: 100px 100px
+
+	p
+		color white
+		font-size 1.4em
+		text-align center
+		padding-top 5px
 
 /* Animations and Responsive
 -----------------------------------------------------------------------------*/ 
