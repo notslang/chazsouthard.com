@@ -15,7 +15,6 @@ layouts:
 # variables or (coffeescript) functions.
 locals:
   title: 'Chaz Southard'
-  pages: ['chaz', 'portfolio', 'about', 'blog', 'contact']
 
 # Precompiled template path, see http://roots.cx/docs/#precompile
 # templates: 'views/templates'

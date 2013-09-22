@@ -18,24 +18,6 @@ require.config(
 
 # get the libraries and then call the function
 require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
-	# now that jquery, jsonp, and backbone are loaded, init JSONP
-	jsonp = new JSONP()
-
-	# get all the content on the homepage as JSON and then call the function with the data
-	jsonp.get("#{BACKEND_URL}/?json=1", {}, (data) ->
-		# loop through the data and make a section for each post, and append it to the body (for now)
-		for post in data['posts']
-			console.log post
-			console.log $('#blog-content')
-			$('#blog_content').append("""
-			<section>
-				<h1 class="title">#{post['title']}</h1>
-				<span class="author">by #{post['author']['name']}</span>
-				#{post['content']}
-			</section>
-			""")
-	)
-
 	#general functions
 	String::title_case = ->
 		@replace /\w\S*/g, (txt) ->
@@ -46,23 +28,35 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 	 * this view just manages the navbar at the top of the page
 	###
 	class NavView extends Backbone.View
-		el: $ 'nav .buttonset'  # element already exists in markup
+		el: $ 'nav'  # element already exists in markup
 
 		render: ->
-			page = @model.current_page().get('name')
+			page = @model.current_page()
 
 			# set the title of the page
-			document.title = "#{page.replace("_", " ").title_case()} | Chaz Southard"
+			document.title = "#{page.get('name')} | Chaz Southard"
 
 			# ensure that the correct navbar button is selected... since it is
 			# a radio button, it unselects anything else
-			@$el.find("\##{page}_nav").prop "checked", true
+			@$el.find("\##{page.get('slug')}_nav").prop "checked", true
 
-			console.log "(nav) page: #{page}"
+			console.log "(nav) page: #{page.get('name')}"
+
+		added_page: (page_model) ->
+			name = page_model.get('name')
+			slug = page_model.get('slug')
+
+			@$el.find('.buttonset').append("""
+				<input type="radio" name="nav" value="#{slug}", id="#{slug}_nav")>
+				<label for="#{slug}_nav">
+					<a href="##{slug}">#{name}</a>
+				</label>
+			""")
 
 		initialize: ->
 			_.bindAll @
 			@model.on('change:selected', @render)
+			@model.on('add', @added_page)
 
 
 	# the router makes the backbuttons work (since we're not really going to another page, we are just loading new content for the page we are on). also it deals with firing events when the url hash is changed
@@ -78,10 +72,11 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 			# assign a model during init like in a view
 			@model = options.model
 	
-	# this is a model that represents a single page... it's basically just used to hold the name and if it is selected or not 
+	# this is a model that represents a single page... it's basically just used to hold the slug, name, and if it is selected or not 
 	class Page extends Backbone.Model
 		defaults:
 			name: ''
+			slug: ''
 			selected: false # value used by Pages for changing the active page
 
 			# bind-able functions... empty by default
@@ -119,26 +114,33 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 
 			@model.on('change:selected', @render)
 			@model.view = @
-			@el = $("\##{@model.get('name')}_content")[0]
+
+			slug = @model.get('slug')
+			console.log "loaded #{slug}", window.navView.el
+
+			$(window.navView.el).after("""
+				<section id="#{slug}_content">
+				</section>
+			""")
+
+			@el = $("\##{slug}_content")[0]
 			@render()
 
 	# this is a collection of all the pages in the application... it deals with changing the current page when the url changes
 	class PagesCollection extends Backbone.Collection
 		# to determine what should be rendered in the navbar on any given page
 		model: Page
-		default_page: 'chaz'
+		default_page: 'blog'
 
 		added_page: (page_model) ->
 			#used to create the view for a page after it has been added
 			new PageView({model: page_model})
 
-		control: (name) ->
-
-		change_page: (page_name) ->
+		change_page: (page_slug) ->
 			# update the active page. this should only be called by the router
 			page = @find(
 				(page_obj) ->
-					return page_obj.get('name') is page_name
+					return page_obj.get('slug') is page_slug
 			)
 
 			try
@@ -148,7 +150,7 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 			if page?
 				page.set(selected: true)
 			else
-				console.log "#{page_name} doesn't exist, redirecting to #{@default_page}..."
+				console.log "#{page_slug} doesn't exist, redirecting to #{@default_page}..."
 
 				router.navigate(@default_page,
 					trigger: true
@@ -171,19 +173,55 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 	window.router = new Router model: pages
 	window.navView = new NavView model: pages
 
-	for page in ['chaz', 'portfolio', 'about', 'blog', 'contact']
-		# loop through all the pages we want, making a model for each one
-		pages.create(
-			name: page
-		)
+	#for page in ['chaz', 'portfolio', 'about', 'blog', 'contact']
+	#	# loop through all the pages we want, making a model for each one
+	#	pages.create(
+	#		slug: page
+	#	)
 
-	Backbone.history.start()
+	pages_loaded = ->
+		Backbone.history.start()
+		
+		# change to default page at startup (if there is no hash fragment)
+		if Backbone.history.fragment is ''
+			App.Router.navigate(pages.default_page,
+				trigger: true
+				replace: true
+			)
 
-	# change to default page at startup (if there is no hash fragment)
-	if Backbone.history.fragment is ''
-		App.Router.navigate(pages.default_page,
-			trigger: true
-			replace: true
-		)
+	# now that jquery, jsonp, and backbone are loaded, init JSONP
+	jsonp = new JSONP()
 
-	return
+	jsonp.get("#{BACKEND_URL}/?json=get_page_index", {}, (data) ->
+		# loop through the pages
+		for page in data['pages']
+			pages.create(
+				slug: page['slug']
+				name: page['title']
+			)
+
+			# add the content
+			$("##{page['slug']}_content")[0].innerHTML = page['content']
+
+		pages_loaded()
+	)
+
+	pages.create(
+		slug: 'blog'
+		name: 'Blog'
+	)
+
+	# get all the content on the homepage as JSON and then call the function
+	# with the data
+	jsonp.get("#{BACKEND_URL}/?json=1", {}, (data) ->
+		# loop through the data and make a section for each post, and append it to the blog page
+		for post in data['posts']
+			$('#blog_content').append("""
+			<section>
+				<h1 class="title">#{post['title']}</h1>
+				<span class="author">by #{post['author']['name']}</span>
+				#{post['content']}
+			</section>
+			""")
+	)
+

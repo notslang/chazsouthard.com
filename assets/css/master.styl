@@ -18,45 +18,42 @@ gray = #ECF0F1
 ltgray = #7f7f7f
 orange = #D5572E
 slate = #192d35
-white = #fff 
+white = #F6F8FB
 
 // dims
 logo_height = 100px
+nav_border_width = 10px
 
 // responsive
 img, object, embed, audio, video
-  max-width:100%
+	max-width:100%
 
 //grid
-
 grid()
-  column-width = 60px
-  gutter-width = 20px
-  columns = 12
-  total-width = 100%
+	column-width = 60px
+	gutter-width = 20px
+	columns = 12
+	total-width = 100%
 
-//globals
 body
-  border-top: 7px solid orange
-  position: relative
-  background: #f6f8fb
-  overflow-x: hidden
-  -webkit-animation: fadeIn 1s 
+	position: relative
+	background: white
+
+body, html
+	min-height 100%
+	height 100%
 
 strong
-  font-weight: 600
-
-hr 
-	border-top none
-	background: #f5f5f5 url('../img/divider.png') repeat-x bottom left;
+	font-weight: 600
 
 header
-  group()
-  padding 0
-  max-width 1200px
+	group()
+	padding 0
+	max-width 1200px
 
-  .title 
-    font-size 3em
+	.title 
+		font-size 3em
+
 //basic typography
 nav, h1, h2, h3, h4, h5, h6
 	font-family: 'Yanone Kaffeesatz', sans-serif
@@ -68,7 +65,8 @@ p
 nav
 	position relative
 	background ltblue
-	border-bottom 10px solid slate
+	border-top: nav_border_width solid orange
+	border-bottom nav_border_width solid slate
 	line-height logo_height
 	font-size (logo_height / 6)
 
@@ -124,165 +122,147 @@ section
 		position relative
 		size 40% 50px
 		background url('../img/moon.svg') no-repeat 100%
-    group()
+		group()
 
  //Main Content
  #content
-  max-width:960px;
-  padding: 0 40px
-  margin: 0 auto
-  margin-bottom: 50px
+	max-width:960px;
+	padding: 0 40px
+	margin: 0 auto
+	margin-bottom: 50px
 
-  &.docs
-    padding-left: 260px
-    padding-right: 0
-    max-width: 700px
+	&.docs
+		padding-left: 260px
+		padding-right: 0
+		max-width: 700px
 
-  h3
-    font-weight: normal
-    color: #333
-    font-size: 2em
-    margin-bottom: 15px
-    margin-top: 25px
+	h3
+		font-weight: normal
+		color: #333
+		font-size: 2em
+		margin-bottom: 15px
+		margin-top: 25px
 
-  h5
-    font-weight: normal
-    color: #333
-    font-size: 1.3em
-    margin-bottom: 10px
-    padding-bottom: 3px
-    border-bottom: 1px solid rgba(#000,.1)
+	h5
+		font-weight: normal
+		color: #333
+		font-size: 1.3em
+		margin-bottom: 10px
+		padding-bottom: 3px
+		border-bottom: 1px solid rgba(#000,.1)
 
-  blockquote
-    border-left: 3px solid orange
-    margin-left: 0
-    padding-left: 15px
-    italic()
+	blockquote
+		border-left: 3px solid orange
+		margin-left: 0
+		padding-left: 15px
+		italic()
 
-  p
-    color: #5e5e5e
-    font-size: 16px
-    line-height: 1.6em
+	p
+		color: #5e5e5e
+		font-size: 16px
+		line-height: 1.6em
 
-  ul
-    color: #5e5e5e
-    font-size: 16px
-    line-height: 1.6em
+	ul
+		color: #5e5e5e
+		font-size: 16px
+		line-height: 1.6em
 
-  a
-    color: blue
-    text-decoration: none
-    transition()
-    border-bottom: 1px solid transparent
-    font-weight: 500
+	a
+		color: blue
+		text-decoration: none
+		transition()
+		border-bottom: 1px solid transparent
+		font-weight: 500
 
-    &:hover
-      border-bottom: 1px solid orange
+		&:hover
+			border-bottom: 1px solid orange
 
 #metabox
-  position relative
-  display inline-block
-  float left
-  height:300px
-  width: 300px
-  margin-right 40px
-  background: gray  
-  background-size: 100px 100px
-  group ()
+	position relative
+	display inline-block
+	float left
+	height:300px
+	width: 300px
+	margin-right 40px
+	background: gray	
+	background-size: 100px 100px
+	group ()
 	.moon
-  	display inline-block
+		display inline-block
 		position relative
 		background url('../img/moon.svg') no-repeat 100%
 
 // Right Picture
 #picture-drip
-  display inline-block
-  height:600px
-  width: 600px
-  background slate
-  background: gray url('../img/rogue.jpg') center center no-repeat
-  background-size: 560px 560px
-  group ()
+	display inline-block
+	height:600px
+	width: 600px
+	background slate
+	background: gray url('../img/rogue.jpg') center center no-repeat
+	background-size: 560px 560px
+	group ()
 
 #picture-title
-  height 20px
-  background none
-  margin-top -50px;
-  p 
-    font-size 1.2em
-    font-weight bold
-    color slate
-    text-align left
-    padding-left 650px;
-    text-transform uppercase
+	height 20px
+	background none
+	margin-top -50px;
+	p 
+		font-size 1.2em
+		font-weight bold
+		color slate
+		text-align left
+		padding-left 650px;
+		text-transform uppercase
 
 // portfolio
 
 #portfolio_content
-  .image
-    inline-list: 30px
-    text-align: center
-  li
-    position: relative
-    cursor: pointer
-    transition()
-    width: 166px
+	.image
+		inline-list: 30px
+		text-align: center
+	li
+		position: relative
+		cursor: pointer
+		transition()
+		width: 166px
 
 	&:hover
-	  opacity: .8
+		opacity: .8
 
-  .img 
+	.img 
 	background: #ccc
 	border-radius: 4px
 	size: 140
 	background-size: 140px 140px
-	/*  &.gs
-		bg: 't1.png'
 
-	  &.structure
-	    bg: 't2.png'
-
-	  &.axiscss
-	    bg: 't3.jpg'
-
-	  &.dynamic
-		bg: 't4.jpg'
-
-   	  &.precompiled
-	    bg: 't5.jpg'
-
-    .play
-	  bg: 'play.png'
-	   size: 46 50
-		  background-size: 46px 50px
-		  absolute: top 47px left 48px
-	*/
 	p
-      fs: 12px
-	  bold()
-	  text-align: 
+			fs: 12px
+		bold()
+		text-align: 
 
 #about_content
-  group()
+	group()
+
 /* About
 -----------------------------------------------------------------------------*/
 #hero
-  width:100%
-  height:500px
-  background: slate
-  color gray
-  padding 50px
-  background: lighten(slate, 2%) url('../img/Bg-About.jpg') center center no-repeat
-  background-size: 100% 100%
-  group()
-  h2
-  max-width: 1400px
-  margin: 0 auto
-  font-weight: normal
-  text-align: center
-  font-size: 3em
-  p
-  font-size: 1.4em
+	width:100%
+	height:500px
+	background: slate
+	color gray
+	padding 50px
+	background: lighten(slate, 2%) url('../img/Bg-About.jpg') center center no-repeat
+	background-size: 100% 100%
+	group()
+
+	h2
+		max-width: 1400px
+		margin: 0 auto
+		font-weight: normal
+		text-align: center
+		font-size: 3em
+	p
+		font-size: 1.4em
 
 /* Blog
 -----------------------------------------------------------------------------*/
