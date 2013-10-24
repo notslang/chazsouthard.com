@@ -8,6 +8,7 @@ require.config(
 		backbone: '../components/backbone/backbone'
 		jquery: '../components/jquery/jquery.min'
 		JSONP: '../js/jsonp'
+		fancybox: '../components/fancybox/jquery.fancybox'
 	shim:
 		underscore:
 			exports: '_'
@@ -15,6 +16,9 @@ require.config(
 			deps: ['underscore', 'jquery']
 			exports: 'Backbone'
 )
+
+require ['jquery', 'fancybox'], ($) ->
+	$('.gallery img').fancybox()
 
 # get the libraries and then call the function
 require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
@@ -219,7 +223,7 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 			$('#blog_content').append("""
 			<section>
 				<h1 class="title">#{post['title']}</h1>
-				<span class="author">by #{post['author']['name']}</span>
+				<span class="post-info">Posted on <span class="author">#{post['date']}</span> by <span class="author">#{post['author']['name']}</span></span>
 				#{post['content']}
 			</section>
 			""")
