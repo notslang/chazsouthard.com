@@ -15,6 +15,8 @@ require.config(
 		backbone:
 			deps: ['underscore', 'jquery']
 			exports: 'Backbone'
+		fancybox:
+			deps: ['jquery']
 )
 
 require ['jquery', 'fancybox'], ($) ->
