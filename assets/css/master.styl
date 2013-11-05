@@ -13,14 +13,17 @@ blue = #062C6C
 ltblue = #328bde
 gray = #ECF0F1
 ltgray = #7f7f7f
+dark_gray = #555
 orange = #f4cd0e
 slate = #192d35
 white = #F6F8FB
 
 // dims
 regular_margin = 10px
+regular_font_size = 17px
 logo_height = 100px
 nav_border_width = regular_margin
+footer_height = 130px
 
 // responsive
 img, object, embed, audio, video
@@ -36,8 +39,10 @@ grid()
 body
 	position: relative
 	background: white
+	color dark_gray
 
 body, html
+	min-width 200px // yeah - that's as small as we're going
 	min-height 100%
 	height 100%
 
@@ -57,7 +62,8 @@ nav, h1, h2, h3, h4, h5, h6
 	font-family: 'Yanone Kaffeesatz', sans-serif
 
 p
-	font-family: 'Didact Gothic', sans-serif;
+	font-family 'Didact Gothic', sans-serif
+	font-size regular_font_size
 
 // layout 
 nav
@@ -66,7 +72,7 @@ nav
 	border-top: nav_border_width solid orange
 	border-bottom nav_border_width solid slate
 	line-height logo_height
-	font-size (logo_height / 6)
+	font-size regular_margin * 2
 
 	label
 		text-transform uppercase
@@ -89,7 +95,7 @@ nav
 	box-sizing border-box
 	padding logo_padding
 	margin logo_padding
-	border 1px solid orange
+	border 2px solid orange
 
 	//the background image is really only the weird shape in the middle, the
 	//surrounding circle can be made with pure css, bringing our image size
@@ -105,7 +111,7 @@ section
 	background gray
 	padding (regular_margin / 2)
 	margin regular_margin
-	min-height calc(100% \- (200px + 121px + 40px + 1px))
+	min-height calc(100% \- (footer_height + 121px + 20px))
 	box-sizing border-box
 
 	h1
@@ -130,9 +136,24 @@ section
 	section
 		padding regular_margin
 
+		.post-info, .title
+			margin 0
+			padding regular_margin
+			margin-left -(regular_margin)
+			border-left regular_margin solid orange
+			padding-bottom 0
+
+		.post-info
+			color lighten(dark_gray, 20%)
+			font-size regular_font_size * 0.75
+			padding-top 0
+
+		.title
+			margin-top -(regular_margin)
+
 //Main Content
 #content
-	max-width:960px;
+	max-width: 960px
 	padding: 0 40px
 	margin: 0 auto
 	margin-bottom: 50px
@@ -155,7 +176,7 @@ section
 		font-size: 1.3em
 		margin-bottom: 10px
 		padding-bottom: 3px
-		border-bottom: 1px solid rgba(#000,.1)
+		border-bottom: 1px solid rgba(#000, 0.1)
 
 	blockquote
 		border-left: 3px solid orange
@@ -385,17 +406,17 @@ textarea
 
 footer
 	width 100%
-	height:200px
-	background slate
+	height footer_height
 	font-size 1em
-	background: lighten(slate, 30%) url('../img/logo2.png') center center no-repeat
+	background lighten(slate, 30%) url('../img/logo2.png') center bottom no-repeat
 	background-size: 100px 100px
 
 	p
+		margin 0
+		padding-top 5px
 		color white
 		font-size 1.4em
 		text-align center
-		padding-top 5px
 
 /* Animations and Responsive
 -----------------------------------------------------------------------------*/ 
@@ -417,3 +438,27 @@ footer
 	br, .wp-caption-text
 		display none
 
+#links
+	position: fixed
+	bottom: 10px
+	width: 100%
+	padding 0
+	padding-top: 10px
+	list-style: none
+	text-align: center
+	z-index: 99999
+
+	li
+		display: inline
+		padding: 0 5px
+
+		label
+			width: 12px
+			height: 12px
+			border-radius: 100%
+			display: inline-block
+			background-color: rgba(0, 0, 0, 0.6)
+			cursor: pointer
+
+		&.active label
+			background-color: white

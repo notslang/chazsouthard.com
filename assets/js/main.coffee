@@ -19,8 +19,7 @@ require.config(
 			deps: ['jquery']
 )
 
-require ['jquery', 'fancybox'], ($) ->
-	$('.gallery img').fancybox()
+
 
 # get the libraries and then call the function
 require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
@@ -195,6 +194,11 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 				replace: true
 			)
 
+		$('.gallery').each((i) ->
+			console.log i
+			$(@).find('a').attr('rel', "gallery-#{i}")
+		)
+
 	# now that jquery, jsonp, and backbone are loaded, init JSONP
 	jsonp = new JSONP()
 
@@ -225,9 +229,35 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 			$('#blog_content').append("""
 			<section>
 				<h1 class="title">#{post['title']}</h1>
-				<span class="post-info">Posted on <span class="author">#{post['date']}</span> by <span class="author">#{post['author']['name']}</span></span>
+				<p class="post-info">Posted on <span class="date">#{post['date']}</span> by <span class="author">#{post['author']['name']}</span></p>
 				#{post['content']}
 			</section>
 			""")
 	)
 
+
+require ['jquery', 'fancybox'], ($) ->
+
+	$('.gallery a').fancybox(
+		nextEffect: 'fade'
+		prevEffect: 'fade'
+		padding: 0
+		margin: [15, 15, 40, 15]
+		beforeLoad: ->
+            @title = $(@element).parent().next().html()
+		afterLoad: ->
+			list = $("#links")
+			
+			if not list.length
+				list = $('<ul id="links">')
+			
+				for i in [0...@group.length]
+					$("<li data-index=\"#{i}\"><label></label></li>").click(->
+						$.fancybox.jumpto( $(@).data('index'))
+					).appendTo(list)
+				list.appendTo('body')
+
+			list.find('li').removeClass('active').eq( this.index ).addClass('active')
+		beforeClose: ->
+			$("#links").remove()
+	)
