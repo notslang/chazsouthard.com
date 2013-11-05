@@ -22,7 +22,7 @@ require.config(
 
 
 # get the libraries and then call the function
-require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
+require ['jquery', 'JSONP', 'backbone', 'fancybox'], ($, JSONP, Backbone) ->
 	#general functions
 	String::title_case = ->
 		@replace /\w\S*/g, (txt) ->
@@ -184,7 +184,16 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 	#		slug: page
 	#	)
 
+	num_pages_loaded = 0
+	total_pages = 2 # not really pages: just number of requests
 	pages_loaded = ->
+		# make sure everything is loaded first
+		num_pages_loaded++
+		if num_pages_loaded isnt total_pages
+			return
+
+		$('#loading').remove()
+
 		Backbone.history.start()
 		
 		# change to default page at startup (if there is no hash fragment)
@@ -194,9 +203,35 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 				replace: true
 			)
 
+		# each gallery needs to be grouped for fancybox using the rel
+		# attribute, otherwise you can't use "next" to look through them
 		$('.gallery').each((i) ->
-			console.log i
+			console.log @
 			$(@).find('a').attr('rel', "gallery-#{i}")
+		)
+	
+		$('.gallery a').fancybox(
+			nextEffect: 'fade'
+			prevEffect: 'fade'
+			padding: 0
+			margin: [15, 15, 40, 15]
+			beforeLoad: ->
+				@title = $(@element).parent().next().html()
+			afterLoad: ->
+				list = $("#links")
+				
+				if not list.length
+					list = $('<ul id="links">')
+				
+					for i in [0...@group.length]
+						$("<li data-index=\"#{i}\"><label></label></li>").click(->
+							$.fancybox.jumpto( $(@).data('index'))
+						).appendTo(list)
+					list.appendTo('body')
+
+				list.find('li').removeClass('active').eq( this.index ).addClass('active')
+			beforeClose: ->
+				$("#links").remove()
 		)
 
 	# now that jquery, jsonp, and backbone are loaded, init JSONP
@@ -233,31 +268,6 @@ require ['jquery', 'JSONP', 'backbone'], ($, JSONP, Backbone) ->
 				#{post['content']}
 			</section>
 			""")
-	)
-
-
-require ['jquery', 'fancybox'], ($) ->
-
-	$('.gallery a').fancybox(
-		nextEffect: 'fade'
-		prevEffect: 'fade'
-		padding: 0
-		margin: [15, 15, 40, 15]
-		beforeLoad: ->
-            @title = $(@element).parent().next().html()
-		afterLoad: ->
-			list = $("#links")
-			
-			if not list.length
-				list = $('<ul id="links">')
-			
-				for i in [0...@group.length]
-					$("<li data-index=\"#{i}\"><label></label></li>").click(->
-						$.fancybox.jumpto( $(@).data('index'))
-					).appendTo(list)
-				list.appendTo('body')
-
-			list.find('li').removeClass('active').eq( this.index ).addClass('active')
-		beforeClose: ->
-			$("#links").remove()
+		
+		pages_loaded()
 	)
