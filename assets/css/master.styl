@@ -1,13 +1,10 @@
-normalize()
-base()
-buttons()
-flash-notices()
 
 // this is actually a practice worth noting. By using variables, I can
 // override normal color names with specific shades of a given color. And by
 // assigning names, I can insure that there are no weird "slightly-off"
 // versions of a color. Also, it makes the CSS much more readable.
 
+@import 'base'
 @import '_ui-elements'
 @import '_settings'
 
@@ -16,13 +13,14 @@ blue = #062C6C
 ltblue = #328bde
 gray = #ECF0F1
 ltgray = #7f7f7f
-orange = #D5572E
+orange = #f4cd0e
 slate = #192d35
 white = #F6F8FB
 
 // dims
+regular_margin = 10px
 logo_height = 100px
-nav_border_width = 10px
+nav_border_width = regular_margin
 
 // responsive
 img, object, embed, audio, video
@@ -84,16 +82,14 @@ nav
 #logo
 	logo_padding = (logo_height / 6)
 	content_size = logo_height - 2 * logo_padding
-	size content_size
+	width content_size
+	height content_size
 	border-radius 50%
 	display inline-block
 	box-sizing border-box
 	padding logo_padding
 	margin logo_padding
-
-	//a 1px border would look choppy... using a shadow gives us a slight
-	//antialiasing effect
-	box-shadow 0 0 2px 1px orange 
+	border 1px solid orange
 
 	//the background image is really only the weird shape in the middle, the
 	//surrounding circle can be made with pure css, bringing our image size
@@ -107,8 +103,8 @@ section
 	position relative
 	line-height 30px
 	background gray
-	padding 20px
-	margin 20px
+	padding (regular_margin / 2)
+	margin regular_margin
 	min-height calc(100% \- (200px + 121px + 40px + 1px))
 	box-sizing border-box
 
@@ -125,8 +121,17 @@ section
 		background url('../img/moon.svg') no-repeat 100%
 		group()
 
- //Main Content
- #content
+// the blog has sections inside of it
+#blog_content
+	background transparent
+	margin 0
+	padding 0
+
+	section
+		padding regular_margin
+
+//Main Content
+#content
 	max-width:960px;
 	padding: 0 40px
 	margin: 0 auto
@@ -344,7 +349,7 @@ input, textarea, select, button
 		border-color gold
 
 input, select, button
-	height:50px
+	height 50px
 	group()
 
 .wpcf7-form-control-wrap
@@ -400,7 +405,15 @@ footer
 .gallery-icon, .gallery-item
 	display inline-block
 
+.gallery-item
+	margin (regular_margin / 2)
+
 .gallery
+	line-height 0
+	display flex
+	justify-content center
+	flex-flow row wrap
+
 	br, .wp-caption-text
 		display none
 
