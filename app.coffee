@@ -16,5 +16,7 @@ layouts:
 locals:
   title: 'Chaz Southard'
 
+css_library: 'nib'
+
 # Precompiled template path, see http://roots.cx/docs/#precompile
 # templates: 'views/templates'
