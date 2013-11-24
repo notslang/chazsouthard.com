@@ -16,13 +16,14 @@ html
   body
     header
     nav
-        a#logo
+        a.logo
         .buttonset
 
     != content
 
     footer  
       p © Chaz Southard 2013
+      a(href="/").logo
     //- add other scripts through require.js, not here
     script(data-main="js/main", src="js/require.js")
 

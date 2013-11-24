@@ -9,6 +9,8 @@ require.config(
 		jquery: '../components/jquery/jquery.min'
 		JSONP: '../js/jsonp'
 		fancybox: '../components/fancybox/jquery.fancybox'
+		contact_form: '../js/contact-form'
+		jquery_form: '../js/jquery.form'
 	shim:
 		underscore:
 			exports: '_'
@@ -17,12 +19,15 @@ require.config(
 			exports: 'Backbone'
 		fancybox:
 			deps: ['jquery']
+		contact_form:
+			deps: ['jquery', 'jquery_form']
 )
-
-
+window._wpcf7 =
+	loaderUrl: "http:\/\/69.55.49.53\/wp-content\/plugins\/contact-form-7\/images\/ajax-loader.gif",
+	sending: "Sending ..."
 
 # get the libraries and then call the function
-require ['jquery', 'JSONP', 'backbone', 'fancybox'], ($, JSONP, Backbone) ->
+require ['jquery', 'JSONP', 'backbone', 'fancybox', 'contact_form'], ($, JSONP, Backbone) ->
 	#general functions
 	String::title_case = ->
 		@replace /\w\S*/g, (txt) ->
@@ -206,7 +211,6 @@ require ['jquery', 'JSONP', 'backbone', 'fancybox'], ($, JSONP, Backbone) ->
 		# each gallery needs to be grouped for fancybox using the rel
 		# attribute, otherwise you can't use "next" to look through them
 		$('.gallery').each((i) ->
-			console.log @
 			$(@).find('a').attr('rel', "gallery-#{i}")
 		)
 	
@@ -233,6 +237,11 @@ require ['jquery', 'JSONP', 'backbone', 'fancybox'], ($, JSONP, Backbone) ->
 			beforeClose: ->
 				$("#links").remove()
 		)
+
+		#make the contact form work
+		form = $('.wpcf7 form')[0]
+		$(form).attr('action', BACKEND_URL + $(form).attr('action'))
+		$.wpcf7Init()
 
 	# now that jquery, jsonp, and backbone are loaded, init JSONP
 	jsonp = new JSONP()

@@ -14,8 +14,8 @@ ltblue = #328bde
 gray = #ECF0F1
 ltgray = #7f7f7f
 dark_gray = #555
-orange = #f4cd0e
 slate = #192d35
+orange = #f4cd0e
 white = #F6F8FB
 
 // dims
@@ -82,27 +82,20 @@ nav
 		a
 			padding 5px
 
-#logo, nav
+.logo, nav
 	vertical-align middle
 
-#logo
-	logo_padding = (logo_height / 6)
-	content_size = logo_height - 2 * logo_padding
+.logo
+	content_size = logo_height - 2 * regular_margin
 	width content_size
 	height content_size
-	border-radius 50%
 	display inline-block
 	box-sizing border-box
-	padding logo_padding
-	margin logo_padding
-	border 2px solid orange
-
-	//the background image is really only the weird shape in the middle, the
-	//surrounding circle can be made with pure css, bringing our image size
-	//down to 1.6 kb - enough to be base64'ed and inlined. And that means 1
-	//less http request & faster page load time
 	background url('../img/logo2.png') no-repeat center
-	background-size 60% 
+	background-size 100%
+
+nav .logo
+	margin regular_margin
 
 // Document setup
 section
@@ -111,7 +104,7 @@ section
 	background gray
 	padding (regular_margin / 2)
 	margin regular_margin
-	min-height calc(100% \- (footer_height + 121px + 20px))
+	min-height calc(100% \- (footer_height + 122px + 20px))
 	box-sizing border-box
 
 	h1
@@ -134,7 +127,17 @@ section
 	padding 0
 
 	section
+		// text becomes more fifficult to read in really long lines
+		max-width 900px
+
+		margin-left auto
+		margin-right auto
+		border-left regular_margin solid transparent
+		border-right regular_margin solid transparent
+		background-clip padding-box
+
 		padding regular_margin
+
 
 		.post-info, .title
 			margin 0
@@ -151,265 +154,16 @@ section
 		.title
 			margin-top -(regular_margin)
 
-//Main Content
-#content
-	max-width: 960px
-	padding: 0 40px
-	margin: 0 auto
-	margin-bottom: 50px
-
-	&.docs
-		padding-left: 260px
-		padding-right: 0
-		max-width: 700px
-
-	h3
-		font-weight: normal
-		color: #333
-		font-size: 2em
-		margin-bottom: 15px
-		margin-top: 25px
-
-	h5
-		font-weight: normal
-		color: #333
-		font-size: 1.3em
-		margin-bottom: 10px
-		padding-bottom: 3px
-		border-bottom: 1px solid rgba(#000, 0.1)
-
-	blockquote
-		border-left: 3px solid orange
-		margin-left: 0
-		padding-left: 15px
-		italic()
-
-	p
-		color: #5e5e5e
-		font-size: 16px
-		line-height: 1.6em
-
-	ul
-		color: #5e5e5e
-		font-size: 16px
-		line-height: 1.6em
-
-	a
-		color: blue
-		text-decoration: none
-		transition()
-		border-bottom: 1px solid transparent
-		font-weight: 500
-
-		&:hover
-			border-bottom: 1px solid orange
-
-#metabox
-	position relative
-	display inline-block
-	float left
-	height:300px
-	width: 300px
-	margin-right 40px
-	background: gray	
-	background-size: 100px 100px
-	group ()
-	.moon
-		display inline-block
-		position relative
-		background url('../img/moon.svg') no-repeat 100%
-
-// Right Picture
-#picture-drip
-	display inline-block
-	height:600px
-	width: 600px
-	background slate
-	background: gray url('../img/rogue.jpg') center center no-repeat
-	background-size: 560px 560px
-	group ()
-
-#picture-title
-	height 20px
-	background none
-	margin-top -50px;
-	p 
-		font-size 1.2em
-		font-weight bold
-		color slate
-		text-align left
-		padding-left 650px;
-		text-transform uppercase
-
-// portfolio
-
-#portfolio_content
-	.image
-		inline-list: 30px
-		text-align: center
-	li
-		position: relative
-		cursor: pointer
-		transition()
-		width: 166px
-
-	&:hover
-		opacity: .8
-
-	.img 
-	background: #ccc
-	border-radius: 4px
-	size: 140
-	background-size: 140px 140px
-
-	p
-			fs: 12px
-		bold()
-		text-align: 
-
-#about_content
-	group()
-
-/* About
------------------------------------------------------------------------------*/
-#hero
-	width:100%
-	height:500px
-	background: slate
-	color gray
-	padding 50px
-	background: lighten(slate, 2%) url('../img/Bg-About.jpg') center center no-repeat
-	background-size: 100% 100%
-	group()
-
-	h2
-		max-width: 1400px
-		margin: 0 auto
-		font-weight: normal
-		text-align: center
-		font-size: 3em
-	p
-		font-size: 1.4em
-
-/* Blog
------------------------------------------------------------------------------*/
-#blog
-	width:100%
-	height:500px
-	background: white
-	color slate
-	padding 50px
-	display block
-	group()
-		
-	.post-date
-		position: relative
-		left: 0
-		top: 0
-		padding-top: 20px
-		margin-left: 40px
-		width: 80px
-		height: 80px
-		background-color: slate
-		margin-bottom: 20px
-		color: #fff
-		border-radius: 100%
-
-		.post-date-month
-			padding-top: 20px
-			width: 100%
-			letter-spacing: 2px
-			text-transform: uppercase
-			color: #999
-	h2
-		max-width: 1400px
-		margin: 0 auto
-		font-weight: normal
-		text-align center
-		text-transform: uppercase
-		line-height: .9
-	
-	p.blog
-		width 600px
-		font-size: 1em
-		line-height 1.6em
-		margin: auto;
-		padding 40px
-		color black
-		text-align left
-
-/* Contact
------------------------------------------------------------------------------*/
-#contact
-	display block
-	position relative
-	margin 0 auto;
-	size 50%
-
-	.section-title
-		margin-top: 0
-		text-transform: uppercase
-		line-height: .9
-		text-align center
-
-input, textarea, select, button
-	width 100%
-	font-size: 26px
-	display inline-block
-	text-transform: uppercase
-	padding 6px
-	border none
-	font-weight: 900
-	color: #111
-	background: #f5f5f5 url('../img/divider.png') repeat-x bottom left;
-	text-transform: uppercase
-	font-weight: 900
-	box-sizing border-box
-
-	&:focus
-		border-color gold
-
-input, select, button
-	height 50px
-	group()
-
-.wpcf7-form-control-wrap
-	box-sizing border-box
-	padding 10px
-	padding-right 0
-	padding-top 30px
-	display block
-	font-size: 26px
-	width 33.3%
-
-	@media only screen and (max-width: 800px)
-		width 100% !important
-		padding-left 0
-
-	&:first-child
-		padding-left 0
-
-	&[class*="textarea"]
-		padding 0
-		width 100% !important
-
-textarea
-	resize: vertical
-	min-height 300px
-
-.cf_custom
-	outline: 0 none
-	padding-top 20px
-
-/* Footer
------------------------------------------------------------------------------*/
 
 footer
 	width 100%
 	height footer_height
 	font-size 1em
-	background lighten(slate, 30%) url('../img/logo2.png') center bottom no-repeat
-	background-size: 100px 100px
+	background ltblue
+
+	a.logo
+		margin auto
+		display block
 
 	p
 		margin 0
