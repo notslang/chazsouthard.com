@@ -96,6 +96,7 @@ require ['jquery', 'JSONP', 'backbone', 'gallery', 'fancybox', 'contact_form'], 
 			name: ''
 			slug: ''
 			selected: false # value used by Pages for changing the active page
+			categories: []
 
 			# bind-able functions... empty by default
 			first_load: (->)
@@ -136,8 +137,10 @@ require ['jquery', 'JSONP', 'backbone', 'gallery', 'fancybox', 'contact_form'], 
 			slug = @model.get('slug')
 			console.log "loaded #{slug}", window.navView.el
 
+			classes = @model.get('categories').join(' ')
+			console.log @model.get('categories')
 			$(window.navView.el).after("""
-				<section id="#{slug}_content">
+				<section id="#{slug}_content" class="#{classes}">
 				</section>
 			""")
 
@@ -264,13 +267,19 @@ require ['jquery', 'JSONP', 'backbone', 'gallery', 'fancybox', 'contact_form'], 
 	jsonp = new JSONP()
 
 	jsonp.get("#{BACKEND_URL}/?json=get_page_index", {}, (data) ->
+		console.log data
 		# loop through the pages
 		for page in data['pages']
 			process_attachments(page['attachments'])
 
+			categories = []
+			for category in page['categories']
+				categories.push 'category-' + category['slug']
+
 			pages.create(
 				slug: page['slug']
 				name: page['title']
+				categories: categories
 			)
 
 			# add the content

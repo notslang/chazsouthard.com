@@ -114,13 +114,25 @@ nav .logo
 
 // Document setup
 section
+	// text becomes more fifficult to read in really long lines
+	max-width 900px
+	margin-left auto
+	margin-right auto
+	border-left regular_margin solid transparent
+	border-right regular_margin solid transparent
+
+	&.category-gallery
+		max-width 100%
+		border none
+		padding (regular_margin / 2)
+
 	position relative
 	line-height 30px
 	background gray
-	padding (regular_margin / 2)
-	margin regular_margin
 	min-height calc(100% \- (footer_height + 122px + 20px))
 	box-sizing border-box
+	background-clip padding-box
+	padding regular_margin
 
 	h1
 		text-transform uppercase
@@ -138,21 +150,9 @@ section
 // the blog has sections inside of it
 #blog_content
 	background transparent
-	margin 0
 	padding 0
 
 	section
-		// text becomes more fifficult to read in really long lines
-		max-width 900px
-
-		margin-left auto
-		margin-right auto
-		border-left regular_margin solid transparent
-		border-right regular_margin solid transparent
-		background-clip padding-box
-
-		padding regular_margin
-
 
 		.post-info, .title
 			margin 0
