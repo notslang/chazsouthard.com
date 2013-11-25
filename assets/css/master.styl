@@ -24,6 +24,7 @@ regular_font_size = 17px
 logo_height = 100px
 nav_border_width = regular_margin
 footer_height = 130px
+min_width = 240px // yeah - that's as small as we're going
 
 // responsive
 img, object, embed, audio, video
@@ -40,9 +41,11 @@ body
 	position: relative
 	background: white
 	color dark_gray
+	font-family 'Didact Gothic', sans-serif
+	font-size regular_font_size
 
 body, html
-	min-width 200px // yeah - that's as small as we're going
+	min-width min_width
 	min-height 100%
 	height 100%
 
@@ -61,10 +64,6 @@ header
 nav, h1, h2, h3, h4, h5, h6
 	font-family: 'Yanone Kaffeesatz', sans-serif
 
-p
-	font-family 'Didact Gothic', sans-serif
-	font-size regular_font_size
-
 // layout 
 nav
 	position relative
@@ -74,6 +73,19 @@ nav
 	line-height logo_height
 	font-size regular_margin * 2
 
+	select
+		display none
+		background gray
+		min-width 120px
+
+	// switch to a select box for small devices
+	@media screen and (max-width: 500px)
+		select
+			display inline-block
+
+		.buttonset
+			display none
+
 	label
 		text-transform uppercase
 		color white
@@ -81,6 +93,7 @@ nav
 
 		a
 			padding 5px
+
 
 .logo, nav
 	vertical-align middle
@@ -191,10 +204,15 @@ footer
 figure
 	margin (regular_margin / 2)
 	display inline-block
-	position: relative;
-	overflow: hidden;
+	position: relative
+	overflow: hidden
+
+	img
+		width min_width - (4 * regular_margin)
+		height min_width - (4 * regular_margin)
 
 	figcaption
+		width 100%
 		height 100%
 		line-height 20px
 		left: 0
@@ -208,12 +226,7 @@ figure
 		box-sizing border-box
 		opacity: 0
 		transition: all 0.6s ease
-
-		em
-			padding-bottom 10px
-			display block
-			font-style normal
-			font-size 18px
+		font-size 20px
 
 	&:hover figcaption
 		bottom: 0

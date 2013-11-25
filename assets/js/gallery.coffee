@@ -24,10 +24,7 @@ define ['jquery', 'backbone', 'uuid'], ($, Backbone) ->
 			@el.innerHTML = """
 			<a class="fancybox" rel="#{@model.get('group_id')}" href="#{@model.get('url')}" title="#{@model.get('title')}">
 				<img src="#{@model.get('thumb_url')}" alt="" />
-				<figcaption>
-				<em>#{@model.get('title')}</em>
-				#{@model.get('description')}
-				</figcaption>
+				<figcaption>#{@model.get('title')}</figcaption>
 			</a>
 			"""
 

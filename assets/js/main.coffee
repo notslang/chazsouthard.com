@@ -41,7 +41,7 @@ require ['jquery', 'JSONP', 'backbone', 'gallery', 'fancybox', 'contact_form'], 
 	 * this view just manages the navbar at the top of the page
 	###
 	class NavView extends Backbone.View
-		el: $ 'nav'  # element already exists in markup
+		el: $ 'nav' # element already exists in markup
 
 		render: ->
 			page = @model.current_page()
@@ -52,6 +52,7 @@ require ['jquery', 'JSONP', 'backbone', 'gallery', 'fancybox', 'contact_form'], 
 			# ensure that the correct navbar button is selected... since it is
 			# a radio button, it unselects anything else
 			@$el.find("\##{page.get('slug')}_nav").prop "checked", true
+			@$el.find('select').val('#' + page.get('slug'))
 
 			console.log "(nav) page: #{page.get('name')}"
 
@@ -64,6 +65,10 @@ require ['jquery', 'JSONP', 'backbone', 'gallery', 'fancybox', 'contact_form'], 
 				<label for="#{slug}_nav">
 					<a href="##{slug}">#{name}</a>
 				</label>
+			""")
+
+			@$el.find('select').append("""
+				<option value="##{slug}">#{name}</option>
 			""")
 
 		initialize: ->
@@ -295,4 +300,8 @@ require ['jquery', 'JSONP', 'backbone', 'gallery', 'fancybox', 'contact_form'], 
 			""")
 		
 		pages_loaded()
+	)
+
+	$("nav select").change( ->
+		window.location = $(@).find("option:selected").val();
 	)
