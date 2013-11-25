@@ -1,6 +1,10 @@
 # this points to the server that's holding all our content in wordpress
 BACKEND_URL = 'http://69.55.49.53'
 
+window._wpcf7 =
+	loaderUrl: BACKEND_URL + '/wp-content/plugins/contact-form-7/images/ajax-loader.gif',
+	sending: "Sending ..."
+
 # this is require.js stuff for loading JS libraries
 require.config(
 	paths:
@@ -11,6 +15,8 @@ require.config(
 		fancybox: '../components/fancybox/jquery.fancybox'
 		contact_form: '../js/contact-form'
 		jquery_form: '../js/jquery.form'
+		uuid: '../js/Math.uuid'
+		gallery: '../js/gallery'
 	shim:
 		underscore:
 			exports: '_'
@@ -22,12 +28,9 @@ require.config(
 		contact_form:
 			deps: ['jquery', 'jquery_form']
 )
-window._wpcf7 =
-	loaderUrl: "http:\/\/69.55.49.53\/wp-content\/plugins\/contact-form-7\/images\/ajax-loader.gif",
-	sending: "Sending ..."
 
 # get the libraries and then call the function
-require ['jquery', 'JSONP', 'backbone', 'fancybox', 'contact_form'], ($, JSONP, Backbone) ->
+require ['jquery', 'JSONP', 'backbone', 'gallery', 'fancybox', 'contact_form'], ($, JSONP, Backbone, gallery) ->
 	#general functions
 	String::title_case = ->
 		@replace /\w\S*/g, (txt) ->
@@ -183,11 +186,26 @@ require ['jquery', 'JSONP', 'backbone', 'fancybox', 'contact_form'], ($, JSONP, 
 	window.router = new Router model: pages
 	window.navView = new NavView model: pages
 
-	#for page in ['chaz', 'portfolio', 'about', 'blog', 'contact']
-	#	# loop through all the pages we want, making a model for each one
-	#	pages.create(
-	#		slug: page
-	#	)
+	###*
+	 * holds all the attachments that we find when adding pages. later used to
+       add captions and titles n' stuff to the images because a lot of that
+       isn't avaliable in the outputted html
+     * all the keys are urls, so it's easy to lookup based on the images
+	 * @type {Object}
+	###
+	window.attachment_index = {}
+
+	###*
+	 * put `attachments` into the `attachment_index`
+	 * @param {[type]} attachments an array of attachments
+	 * @return {[type]} [description]
+	###
+	process_attachments = (attachments) ->
+		for attachment in attachments
+			url = attachment['url']
+			delete attachment['url']
+			attachment_index[url] = attachment
+
 
 	num_pages_loaded = 0
 	total_pages = 2 # not really pages: just number of requests
@@ -208,19 +226,13 @@ require ['jquery', 'JSONP', 'backbone', 'fancybox', 'contact_form'], ($, JSONP, 
 				replace: true
 			)
 
-		# each gallery needs to be grouped for fancybox using the rel
-		# attribute, otherwise you can't use "next" to look through them
-		$('.gallery').each((i) ->
-			$(@).find('a').attr('rel', "gallery-#{i}")
-		)
+		gallery() # basically parse the gallery, and spit it back out
 	
 		$('.gallery a').fancybox(
 			nextEffect: 'fade'
 			prevEffect: 'fade'
 			padding: 0
 			margin: [15, 15, 40, 15]
-			beforeLoad: ->
-				@title = $(@element).parent().next().html()
 			afterLoad: ->
 				list = $("#links")
 				
@@ -249,6 +261,8 @@ require ['jquery', 'JSONP', 'backbone', 'fancybox', 'contact_form'], ($, JSONP, 
 	jsonp.get("#{BACKEND_URL}/?json=get_page_index", {}, (data) ->
 		# loop through the pages
 		for page in data['pages']
+			process_attachments(page['attachments'])
+
 			pages.create(
 				slug: page['slug']
 				name: page['title']
@@ -269,7 +283,9 @@ require ['jquery', 'JSONP', 'backbone', 'fancybox', 'contact_form'], ($, JSONP, 
 	# with the data
 	jsonp.get("#{BACKEND_URL}/?json=1", {}, (data) ->
 		# loop through the data and make a section for each post, and append it to the blog page
-		for post in data['posts']
+		for post in data['posts'] 
+			process_attachments(post['attachments'])
+
 			$('#blog_content').append("""
 			<section>
 				<h1 class="title">#{post['title']}</h1>
