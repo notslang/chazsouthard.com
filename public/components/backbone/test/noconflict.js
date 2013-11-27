@@ -1,1 +1,0 @@
-$(document).ready(function(){module("Backbone.noConflict"),test("noConflict",2,function(){var e=Backbone.noConflict();equal(window.Backbone,void 0,"Returned window.Backbone"),window.Backbone=e,equal(window.Backbone,e,"Backbone is still pointing to the original Backbone")})});
