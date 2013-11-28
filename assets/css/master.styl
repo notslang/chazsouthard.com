@@ -26,6 +26,9 @@ nav_border_width = regular_margin
 footer_height = 130px
 min_width = 240px // yeah - that's as small as we're going
 
+//measurements
+nav_bar_height = 122px
+
 // responsive
 img, object, embed, audio, video
 	max-width:100%
@@ -129,7 +132,7 @@ section
 	position relative
 	line-height 30px
 	background gray
-	min-height calc(100% \- (footer_height + 122px + 20px))
+	min-height calc(100% \- (footer_height + nav_bar_height + regular_margin * 2))
 	box-sizing border-box
 	background-clip padding-box
 	padding regular_margin
