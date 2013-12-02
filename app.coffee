@@ -1,4 +1,4 @@
-# roots v2.0.0
+# roots v2.1.0
 
 # Files in this list will not be compiled - minimatch supported
 ignore_files: ['_*', 'readme*', '.gitignore', '.DS_Store', '*.log']
@@ -16,7 +16,8 @@ layouts:
 locals:
   title: 'Chaz Southard'
 
-css_library: 'nib'
+stylus:
+  plugins: [module.require('nib')]
 
 # Precompiled template path, see http://roots.cx/docs/#precompile
 # templates: 'views/templates'
