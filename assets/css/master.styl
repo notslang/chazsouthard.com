@@ -1,33 +1,7 @@
-
-// this is actually a practice worth noting. By using variables, I can
-// override normal color names with specific shades of a given color. And by
-// assigning names, I can insure that there are no weird "slightly-off"
-// versions of a color. Also, it makes the CSS much more readable.
-
+@import '_fancybox'
 @import 'base'
 @import '_ui-elements'
 @import '_settings'
-
-// colors
-blue = #062C6C
-ltblue = #328bde
-gray = #ECF0F1
-ltgray = #7f7f7f
-dark_gray = #555
-slate = #192d35
-orange = #f4cd0e
-white = #F6F8FB
-
-// dims
-regular_margin = 10px
-regular_font_size = 17px
-logo_height = 100px
-nav_border_width = regular_margin
-footer_height = 130px
-min_width = 240px // yeah - that's as small as we're going
-
-//measurements
-nav_bar_height = 122px
 
 // responsive
 img, object, embed, audio, video
@@ -190,11 +164,6 @@ footer
 		font-size 1.4em
 		text-align center
 
-@import "adaptive"
-
-//gallery
-.gallery-icon, .gallery-item
-
 .gallery
 	line-height 0
 	display flex
@@ -234,28 +203,3 @@ figure
 	&:hover figcaption
 		bottom: 0
 		opacity: 1
-
-#links
-	position: fixed
-	bottom: 10px
-	width: 100%
-	padding 0
-	padding-top: 10px
-	list-style: none
-	text-align: center
-	z-index: 99999
-
-	li
-		display: inline
-		padding: 0 5px
-
-		label
-			width: 12px
-			height: 12px
-			border-radius: 100%
-			display: inline-block
-			background-color: rgba(0, 0, 0, 0.6)
-			cursor: pointer
-
-		&.active label
-			background-color: white
