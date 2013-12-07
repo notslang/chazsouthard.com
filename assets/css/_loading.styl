@@ -1,0 +1,53 @@
+.loading-circle
+	loading_size = regular_margin * 4
+	padding_size = regular_margin
+	border_size = (regular_margin / 2)
+	width: loading_size
+	height: loading_size
+	position: fixed
+	top: 50%
+	left: 50%
+	margin-top: -(loading_size / 2) - padding_size - border_size
+	margin-left: -(loading_size / 2) - padding_size - border_size
+	z-index: 8060
+	font-size: 100px
+	border-radius: 50%
+	background dark_blue
+	padding padding_size
+	border solid border_size ltblue
+
+	div
+		dot_size = regular_margin * 2
+		position: absolute
+		width: dot_size
+		height: dot_size
+		border-radius: 50%
+		left: 50%
+		margin-left -(dot_size / 2)
+		transform-origin: 50% (loading_size / 2)
+
+
+		&:nth-child(1)
+			background: #00C176
+			animation: rota 0.9s linear infinite, opa 8s ease-in-out infinite alternate
+
+		&:nth-child(2)
+			background: #88C100
+			animation: rota 0.8s linear infinite, opa 4s ease-in-out infinite alternate
+
+		&:nth-child(3)
+			background: #FABE28
+			animation: rota 0.7s linear infinite, opa 2s ease-in-out infinite alternate
+
+		&:nth-child(4)
+			background: #FF003C
+			animation: rota 0.5s linear infinite, opa 1s ease-in-out infinite alternate
+
+
+@keyframes rota
+	from { transform: rotate(0) }
+	to { transform: rotate(360deg) }
+
+@keyframes opa
+	0% { opacity: 0.5 }
+	100% { opacity: 1 }
