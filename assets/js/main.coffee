@@ -12,7 +12,7 @@ require.config(
 		backbone: '../components/backbone/backbone'
 		jquery: '../components/jquery/jquery.min'
 		JSONP: '../js/jsonp'
-		fancybox: '../components/fancybox/jquery.fancybox'
+		fancybox: '../js/jquery.fancybox'
 		contact_form: '../js/contact-form'
 		jquery_form: '../js/jquery.form'
 		uuid: '../js/Math.uuid'
