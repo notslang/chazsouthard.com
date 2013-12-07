@@ -1,7 +1,11 @@
-@import '_fancybox'
-@import 'base'
-@import '_ui-elements'
+//@import '../components/animate.css/animate.css'
+
+@import 'nib'
 @import '_settings'
+@import '_fancybox'
+@import '_loading'
+@import '_base'
+@import '_ui-elements'
 
 // responsive
 img, object, embed, audio, video
@@ -42,6 +46,28 @@ nav, h1, h2, h3, h4, h5, h6
 	font-family: 'Yanone Kaffeesatz', sans-serif
 
 // layout 
+@keyframes drop_nav
+	from {
+		height regular_margin
+	}
+	to {
+		height nav_bar_height
+	}
+
+@keyframes fadeInDown
+	0% {
+		opacity: 0
+		transform: translateY(-(regular_margin))
+	}
+	50% {
+		opacity: 0
+		transform: translateY(-(regular_margin))
+	}
+	100% {
+		opacity: 1
+		transform: translateY(0)
+	}
+
 nav
 	position relative
 	background ltblue
@@ -49,6 +75,19 @@ nav
 	border-bottom nav_border_width solid slate
 	line-height logo_height
 	font-size regular_margin * 2
+
+	//drop down on page load
+	animation-name: drop_nav
+	animation-iteration-count: 1
+	animation-timing-function: ease-in
+	animation-duration: 0.5s
+
+	.logo, select, .buttonset label
+		display inline-block
+		animation-name: fadeInDown
+		animation-iteration-count: 1
+		animation-timing-function: ease-in
+		animation-duration: 1s
 
 	select
 		display none
@@ -81,7 +120,7 @@ nav
 	height content_size
 	display inline-block
 	box-sizing border-box
-	background url('../img/logo.png') no-repeat center, darken(ltblue, 30%)
+	background url('../img/logo.png') no-repeat center, dark_blue
 	border (regular_margin / 2) solid slate
 	border-radius 50%
 	background-size 100%
@@ -91,7 +130,7 @@ nav .logo
 
 // Document setup
 section
-	// text becomes more fifficult to read in really long lines
+	// text becomes more difficult to read in really long lines
 	max-width 900px
 	margin-left auto
 	margin-right auto
@@ -127,6 +166,7 @@ section
 // the blog has sections inside of it
 #blog_content
 	background transparent
+	border none
 	padding 0
 
 	section
