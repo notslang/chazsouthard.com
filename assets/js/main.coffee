@@ -15,7 +15,6 @@ require.config(
 		fancybox: '../js/jquery.fancybox'
 		contact_form: '../js/contact-form'
 		jquery_form: '../js/jquery.form'
-		uuid: '../js/Math.uuid'
 		gallery: '../js/gallery'
 	shim:
 		underscore:
