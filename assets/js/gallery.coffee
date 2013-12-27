@@ -1,7 +1,14 @@
+###*
+ * A quick and simple UUID function. Credit to
+   https://gist.github.com/jed/982883
+ * @return {String} A random string
+###
+uuid = (a) ->
+  `a?(a^Math.random()*16>>a/4).toString(16):([1e7]+1e3+4e3+8e3+1e11).replace(/[018]/g,this.uuid)`
+
 # get the libraries and then call the function
-define ['jquery', 'backbone', 'uuid'], ($, Backbone) ->
-	
-	# this is a model that represents a single photo... it's basically just used to hold the slug, name, and if it is selected or not 
+define ['jquery', 'backbone'], ($, Backbone) ->
+	# this is a model that represents a single photo... it's basically just used to hold the slug, name, and if it is selected or not
 	class Photo extends Backbone.Model
 		defaults:
 			title: ''
@@ -48,7 +55,7 @@ define ['jquery', 'backbone', 'uuid'], ($, Backbone) ->
 
 		initialize: ->
 			_.bindAll @
-			@group_id = Math.uuid()
+			@group_id = uuid()
 			@on("add", @added_photo)
 			@view = new GalleryView model: @
 
