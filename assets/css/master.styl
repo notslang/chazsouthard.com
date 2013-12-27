@@ -1,4 +1,4 @@
-//@import '../components/animate.css/animate.css'
+//@import '../components/animate-stylus/'
 
 @import 'nib'
 @import '_settings'
@@ -45,28 +45,13 @@ header
 nav, h1, h2, h3, h4, h5, h6
 	font-family: 'Yanone Kaffeesatz', sans-serif
 
-// layout 
-@keyframes drop_nav
-	from {
-		height regular_margin
-	}
-	to {
-		height nav_bar_height
-	}
-
 @keyframes fadeInDown
-	0% {
+	0%
 		opacity: 0
 		transform: translateY(-(regular_margin))
-	}
-	50% {
-		opacity: 0
-		transform: translateY(-(regular_margin))
-	}
-	100% {
+	100%
 		opacity: 1
 		transform: translateY(0)
-	}
 
 nav
 	position relative
@@ -76,18 +61,12 @@ nav
 	line-height logo_height
 	font-size regular_margin * 2
 
-	//drop down on page load
-	animation-name: drop_nav
-	animation-iteration-count: 1
-	animation-timing-function: ease-in
-	animation-duration: 0.5s
-
 	.logo, select, .buttonset label
 		display inline-block
 		animation-name: fadeInDown
 		animation-iteration-count: 1
 		animation-timing-function: ease-in
-		animation-duration: 1s
+		animation-duration: 0.5s
 
 	select
 		display none
@@ -145,23 +124,13 @@ section
 	position relative
 	line-height 30px
 	background gray
-	min-height calc(100% \- (footer_height + nav_bar_height + regular_margin * 2))
+	min-height calc(100% \- (footer_height + nav_bar_height))
 	box-sizing border-box
 	background-clip padding-box
 	padding regular_margin
 
 	h1
 		text-transform uppercase
-
-	&.text:after
-		//I'm just gonna say that this is the class that gets an emblem at the
-		//bottom... I'll prolly come up with a better selector later
-		content ''
-		display inline-block
-		position relative
-		size 40% 50px
-		background url('../img/moon.svg') no-repeat 100%
-		group()
 
 // the blog has sections inside of it
 #blog_content
