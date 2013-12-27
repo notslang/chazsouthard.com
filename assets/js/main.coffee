@@ -16,6 +16,7 @@ require.config(
 		contact_form: '../js/contact-form'
 		jquery_form: '../js/jquery.form'
 		gallery: '../js/gallery'
+		flying_focus: '../js/flying-focus'
 	shim:
 		underscore:
 			exports: '_'
@@ -29,7 +30,7 @@ require.config(
 )
 
 # get the libraries and then call the function
-require ['jquery', 'JSONP', 'backbone', 'gallery', 'fancybox', 'contact_form'], ($, JSONP, Backbone, gallery) ->
+require ['jquery', 'JSONP', 'backbone', 'gallery', 'fancybox', 'contact_form', 'flying_focus'], ($, JSONP, Backbone, gallery) ->
 	#general functions
 	String::title_case = ->
 		@replace /\w\S*/g, (txt) ->
