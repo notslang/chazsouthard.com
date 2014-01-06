@@ -13,6 +13,12 @@ require './jquery.fancybox'
 require './jquery.form'
 require './contact-form'
 
+require './share'
+$('.share').share(
+	url: 'http://chazsouthard.com'
+	text: 'The portfolio of Chaz Southard'
+)
+
 window._wpcf7 =
 	loaderUrl: BACKEND_URL + '/wp-content/plugins/contact-form-7/images/ajax-loader.gif',
 	sending: "Sending ..."

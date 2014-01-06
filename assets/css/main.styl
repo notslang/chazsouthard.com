@@ -8,6 +8,7 @@
 @import '_forms'
 @import '_ui-elements'
 @import '_wordpress'
+@import '_share'
 
 // responsive
 img, object, embed, audio, video
@@ -63,17 +64,20 @@ nav
 	line-height logo_height
 	font-size regular_margin * 2
 
-	.logo, select, .buttonset label
+	.logo, select, .buttonset label, .share
 		display inline-block
 		animation-name: fadeInDown
 		animation-iteration-count: 1
 		animation-timing-function: ease-in
 		animation-duration: 0.5s
 
+	select, .buttonset label, .share
+		height 30px
+
 	select
 		display none
 		background gray
-		min-width 120px
+		min-width 90px
 
 	// switch to a select box for small devices
 	@media screen and (max-width: 500px)
@@ -91,6 +95,8 @@ nav
 		a
 			padding 5px
 
+	.share
+		line-height normal
 
 .logo, nav
 	vertical-align middle

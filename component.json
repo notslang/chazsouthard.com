@@ -13,6 +13,7 @@
 		"public/js/flying-focus.js",
 		"public/js/jquery.fancybox.js",
 		"public/js/jquery.form.js",
-		"public/js/contact-form.js"
+		"public/js/contact-form.js",
+		"public/js/share.js"
 	]
 }
