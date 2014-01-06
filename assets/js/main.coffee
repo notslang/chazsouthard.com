@@ -55,7 +55,7 @@ class NavView extends Backbone.View
 		@$el.find('.buttonset').append("""
 			<input type="radio" name="nav" value="#{slug}", id="#{slug}_nav")>
 			<label for="#{slug}_nav">
-				<a href="##{slug}">#{name}</a>
+				<a href="#!#{slug}">#{name}</a>
 			</label>
 		""")
 
@@ -78,6 +78,7 @@ class Router extends Backbone.Router
 		"*page": "change_page"
 
 	change_page: (page) ->
+		if page? and page[0] is '!' then page = page[1..]
 		if page isnt "" then @model.change_page(page)
 
 	initialize: (options) ->
@@ -171,7 +172,7 @@ class PagesCollection extends Backbone.Collection
 		else
 			console.log "#{page_slug} doesn't exist, redirecting to #{@default_page}..."
 
-			router.navigate(@default_page,
+			router.navigate('!' + @default_page,
 				trigger: true
 				replace: true
 			)
@@ -226,7 +227,7 @@ pages_loaded = ->
 	
 	# change to default page at startup (if there is no hash fragment)
 	if Backbone.history.fragment is ''
-		App.Router.navigate(pages.default_page,
+		App.Router.navigate('!' + pages.default_page,
 			trigger: true
 			replace: true
 		)
