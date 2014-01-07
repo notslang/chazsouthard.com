@@ -69,7 +69,6 @@ module.exports = () ->
 	$('.gallery').each((i, element) ->
 		gallery[i] = new Gallery()
 		$(element).find('a').each((e) ->
-			console.log gallery[i].model
 			url = $(@).attr('href')
 			img = attachment_index[url]
 			gallery[i].add(

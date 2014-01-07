@@ -25,6 +25,14 @@ window._wpcf7 =
 	loaderUrl: BACKEND_URL + '/wp-content/plugins/contact-form-7/images/ajax-loader.gif',
 	sending: "Sending ..."
 
+p = (args...) ->
+	$('#errorbox').append(args.join(''))
+	console.log args...
+
+window.onerror = (msg, url, linenumber) ->
+	p('Error message: ' + msg + '\nLine Number: ' + linenumber)
+	true
+
 #general functions
 String::title_case = ->
 	@replace /\w\S*/g, (txt) ->
@@ -48,7 +56,7 @@ class NavView extends Backbone.View
 		@$el.find("\##{page.get('slug')}_nav").prop "checked", true
 		@$el.find('select').val('#' + page.get('slug'))
 
-		console.log "(nav) page: #{page.get('name')}"
+		p "(nav) page: #{page.get('name')}"
 
 	added_page: (page_model) ->
 		name = page_model.get('name')
@@ -135,7 +143,6 @@ class PageView extends Backbone.View
 		@model.view = @
 
 		slug = @model.get('slug')
-		console.log "loaded #{slug}", window.navView.el
 
 		classes = @model.get('categories').join(' ')
 		$(window.navView.el).after("""
@@ -171,7 +178,7 @@ class PagesCollection extends Backbone.Collection
 		if page?
 			page.set(selected: true)
 		else
-			console.log "#{page_slug} doesn't exist, redirecting to #{@default_page}..."
+			p "#{page_slug} doesn't exist, redirecting to #{@default_page}..."
 
 			router.navigate('!' + @default_page,
 				trigger: true
@@ -262,6 +269,7 @@ pages_loaded = ->
 	$(form).attr('action', BACKEND_URL + $(form).attr('action'))
 	$.wpcf7Init()
 
+	p 'all loaded'
 	window.prerenderReady = true
 
 jsonp("#{BACKEND_URL}/?json=get_page_index", {}, (err, data) ->
@@ -281,6 +289,7 @@ jsonp("#{BACKEND_URL}/?json=get_page_index", {}, (err, data) ->
 
 		# add the content
 		$("##{page['slug']}_content")[0].innerHTML = page['content']
+		p "loaded page: #{page['title']}"
 
 	pages_loaded()
 )
@@ -305,6 +314,7 @@ jsonp("#{BACKEND_URL}/?json=1", {}, (err, data) ->
 		</section>
 		""")
 	
+	p "loaded page: Blog"
 	pages_loaded()
 )
 
