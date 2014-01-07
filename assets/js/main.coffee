@@ -138,7 +138,6 @@ class PageView extends Backbone.View
 		console.log "loaded #{slug}", window.navView.el
 
 		classes = @model.get('categories').join(' ')
-		console.log @model.get('categories')
 		$(window.navView.el).after("""
 			<section id="#{slug}_content" class="#{classes}">
 			</section>
@@ -266,7 +265,6 @@ pages_loaded = ->
 	window.prerenderReady = true
 
 jsonp("#{BACKEND_URL}/?json=get_page_index", {}, (err, data) ->
-	console.log data
 	# loop through the pages
 	for page in data['pages']
 		process_attachments(page['attachments'])
@@ -295,7 +293,6 @@ pages.create(
 # get all the content on the homepage as JSON and then call the function
 # with the data
 jsonp("#{BACKEND_URL}/?json=1", {}, (err, data) ->
-	console.log data
 	# loop through the data and make a section for each post, and append it to the blog page
 	for post in data['posts'] 
 		process_attachments(post['attachments'])
