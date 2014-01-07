@@ -1,3 +1,5 @@
+window.prerenderReady = false
+
 # this points to the server that's holding all our content in wordpress
 BACKEND_URL = 'http://69.55.49.53'
 
@@ -260,6 +262,8 @@ pages_loaded = ->
 	form = $('.wpcf7 form')[0]
 	$(form).attr('action', BACKEND_URL + $(form).attr('action'))
 	$.wpcf7Init()
+
+	window.prerenderReady = true
 
 jsonp("#{BACKEND_URL}/?json=get_page_index", {}, (err, data) ->
 	console.log data
