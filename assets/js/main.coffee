@@ -1,5 +1,3 @@
-window.prerenderReady = false
-
 # this points to the server that's holding all our content in wordpress
 BACKEND_URL = 'http://69.55.49.53'
 
