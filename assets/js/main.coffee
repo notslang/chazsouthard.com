@@ -1,3 +1,12 @@
+# PhantomJS doesn't support bind yet
+`Function.prototype.bind = Function.prototype.bind || function (thisp) {
+  var fn = this;
+  return function () {
+    return fn.apply(thisp, arguments);
+  };
+};`
+
+
 # this points to the server that's holding all our content in wordpress
 BACKEND_URL = 'http://69.55.49.53'
 
@@ -24,12 +33,7 @@ window._wpcf7 =
 	sending: "Sending ..."
 
 p = (args...) ->
-	$('#errorbox').append(args.join(''))
 	console.log args...
-
-window.onerror = (msg, url, linenumber) ->
-	p('Error message: ' + msg + '\nLine Number: ' + linenumber)
-	true
 
 #general functions
 String::title_case = ->
