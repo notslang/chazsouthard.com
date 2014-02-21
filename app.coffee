@@ -2,20 +2,22 @@
 roots = require 'roots'
 fs = require 'fs'
 Builder = require 'component-builder'
+ComponentCoffee = require 'component-coffee'
 
 roots.compiler.on('finished', (err) ->
-	builder = new Builder('./')
-	builder.build((err, res) ->
-		if err
-			console.log(err)
-		else
-			fs.writeFile("./public/main.js", res.require + res.js, (err) ->
-				if err
-					console.log(err)
-				else
-					console.log('built public/main.js')
-			) 
-	)
+  builder = new Builder('./')
+  builder.use(ComponentCoffee)
+  builder.build((err, res) ->
+    if err
+      console.log(err)
+    else
+      fs.writeFile("./public/main.js", res.require + res.js, (err) ->
+        if err
+          console.log(err)
+        else
+          console.log('built public/main.js')
+      )
+  )
 )
 
 # Files in this list will not be compiled - minimatch supported

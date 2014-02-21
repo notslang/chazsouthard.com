@@ -1,20 +1,16 @@
 # PhantomJS doesn't support bind yet
-`Function.prototype.bind = Function.prototype.bind || function (thisp) {
-  var fn = this;
-  return function () {
-    return fn.apply(thisp, arguments);
-  };
-};`
-
-
-# this points to the server that's holding all our content in wordpress
-BACKEND_URL = 'http://69.55.49.53'
+require 'functionbind'
 
 window.$ = require 'jquery'
 _ = require 'underscore'
 Backbone = require 'backbone'
-gallery = require './gallery'
 jsonp = require 'jsonp'
+gallery = require './gallery'
+
+BACKEND_URL = 'http://69.55.49.53'
+WordPress = require 'wp-json-client'
+window.API = new WordPress(BACKEND_URL)
+
 
 # these only need to be called... no init
 require './flying-focus'
@@ -34,11 +30,6 @@ window._wpcf7 =
 
 p = (args...) ->
 	console.log args...
-
-#general functions
-String::title_case = ->
-	@replace /\w\S*/g, (txt) ->
-		txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
 
 ###*
  * modify the navbar to highlight the correct current page.
@@ -234,7 +225,7 @@ pages_loaded = ->
 	$('#loading').remove()
 
 	Backbone.history.start()
-	
+
 	# change to default page at startup (if there is no hash fragment)
 	if Backbone.history.fragment is ''
 		App.Router.navigate('!' + pages.default_page,
@@ -251,10 +242,10 @@ pages_loaded = ->
 		margin: [15, 15, 40, 15]
 		afterLoad: ->
 			list = $("#links")
-			
+
 			if not list.length
 				list = $('<ul id="links">')
-			
+
 				for i in [0...@group.length]
 					$("<li data-index=\"#{i}\"><label></label></li>").click(->
 						$.fancybox.jumpto( $(@).data('index'))
@@ -305,7 +296,7 @@ pages.create(
 # with the data
 jsonp("#{BACKEND_URL}/?json=1", {}, (err, data) ->
 	# loop through the data and make a section for each post, and append it to the blog page
-	for post in data['posts'] 
+	for post in data['posts']
 		process_attachments(post['attachments'])
 
 		$('#blog_content').append("""
@@ -315,7 +306,7 @@ jsonp("#{BACKEND_URL}/?json=1", {}, (err, data) ->
 			#{post['content']}
 		</section>
 		""")
-	
+
 	p "loaded page: Blog"
 	pages_loaded()
 )
