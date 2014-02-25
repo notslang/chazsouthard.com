@@ -228,14 +228,10 @@ API.cache.posts.on 'add', (model) ->
   blog.view.$el.append(model.view.el)
 
 API.cache.pages.on 'add', (model) ->
-  categories = []
-  for category in model.get 'categories'
-    categories.push category.get 'slug'
-
   pageModel = pages.create(
     slug: model.get 'slug'
     name: model.get 'title'
-    categories: categories
+    categories: (category.get('slug') for category in model.get 'categories')
     content: model.get 'content'
   )
   $('nav').after(pageModel.view.el)
@@ -258,8 +254,6 @@ API.cache.pages.on 'add', (model) ->
     $(element).find('a').each((e) ->
       url = $(@).attr('href')
       img = API.cache.attachments.findWhere(url: url)
-      console.log img
-      console.log API.cache.attachments
       gallery[i].add(
         title: img.get 'title'
         url: url
