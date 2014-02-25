@@ -141,26 +141,26 @@ section
 		text-transform uppercase
 
 // the blog has sections inside of it
-#blog_content
+#blog-content
 	background transparent
 	border none
 	padding 0
 
 	section
 
-		.post-info, .title
+		h1 + p, h1
 			margin 0
 			padding regular_margin
 			margin-left -(regular_margin)
 			border-left regular_margin solid orange
 			padding-bottom 0
 
-		.post-info
+		h1 + p
 			color lighten(dark_gray, 20%)
 			font-size regular_font_size * 0.75
 			padding-top 0
 
-		.title
+		h1
 			margin-top -(regular_margin)
 
 

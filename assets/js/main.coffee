@@ -5,12 +5,16 @@ window.$ = require 'jquery'
 _ = require 'underscore'
 Backbone = require 'backbone'
 jsonp = require 'jsonp'
-gallery = require './gallery'
+Gallery = require './gallery'
 
 BACKEND_URL = 'http://69.55.49.53'
 WordPress = require 'wp-json-client'
 window.API = new WordPress(BACKEND_URL)
 
+PostView = require './postview'
+API.cache.posts.on 'add', (model) ->
+  #used to create the view for a post after it has been added
+  new PostView(model: model)
 
 # these only need to be called... no init
 require './flying-focus'
@@ -27,9 +31,6 @@ $('.share').share(
 window._wpcf7 =
   loaderUrl: BACKEND_URL + '/wp-content/plugins/contact-form-7/images/ajax-loader.gif',
   sending: "Sending ..."
-
-p = (args...) ->
-  console.log args...
 
 ###*
  * modify the navbar to highlight the correct current page.
@@ -49,7 +50,7 @@ class NavView extends Backbone.View
     @$el.find("\##{page.get('slug')}_nav").prop "checked", true
     @$el.find('select').val('#' + page.get('slug'))
 
-    p "(nav) page: #{page.get('name')}"
+    console.log "(nav) page: #{page.get('name')}"
 
   added_page: (page_model) ->
     name = page_model.get('name')
@@ -58,7 +59,7 @@ class NavView extends Backbone.View
     @$el.find('.buttonset').append("""
       <input type="radio" name="nav" value="#{slug}", id="#{slug}_nav")>
       <label for="#{slug}_nav">
-        <a href="#!#{slug}">#{name}</a>
+        <a href="##{slug}">#{name}</a>
       </label>
     """)
 
@@ -81,7 +82,7 @@ class Router extends Backbone.Router
     "*page": "change_page"
 
   change_page: (page) ->
-    if page? and page[0] is '!' then page = page[1..]
+    if page? and page[0] is '#' then page = page[1..]
     if page isnt "" then @model.change_page(page)
 
   initialize: (options) ->
@@ -123,27 +124,27 @@ class Page extends Backbone.Model
 # hiding the content of pages that we are not on, and showing the content of
 # the page that we are on
 class PageView extends Backbone.View
-  render: ->
+  tagName: 'section'
+
+  render: =>
     if @model.get('selected')
       @el.style.display = 'block' # show
     else
       @el.style.display = 'none' # hide
 
-  initialize: ->
-    _.bindAll @
-
+  initialize: =>
     @model.on('change:selected', @render)
     @model.view = @
 
     slug = @model.get('slug')
 
-    classes = @model.get('categories').join(' ')
-    $(window.navView.el).after("""
-      <section id="#{slug}_content" class="#{classes}">
-      </section>
-    """)
+    @$el.attr(
+      id: "#{slug}-content"
+      class: (
+        'category-' + category for category in @model.get('categories')
+      ).join(' ')
+    )
 
-    @el = $("\##{slug}_content")[0]
     @render()
 
 # this is a collection of all the pages in the application... it deals with
@@ -155,7 +156,7 @@ class PagesCollection extends Backbone.Collection
 
   added_page: (page_model) ->
     #used to create the view for a page after it has been added
-    new PageView({model: page_model})
+    new PageView(model: page_model)
 
   change_page: (page_slug) ->
     # update the active page. this should only be called by the router
@@ -171,9 +172,9 @@ class PagesCollection extends Backbone.Collection
     if page?
       page.set(selected: true)
     else
-      p "#{page_slug} doesn't exist, redirecting to #{@default_page}..."
+      console.log "#{page_slug} doesn't exist, redirecting to #{@default_page}..."
 
-      router.navigate('!' + @default_page,
+      router.navigate(@default_page,
         trigger: true
         replace: true
       )
@@ -193,34 +194,12 @@ window.pages = new PagesCollection()
 window.router = new Router model: pages
 window.navView = new NavView model: pages
 
-###*
- * holds all the attachments that we find when adding pages. later used to add
-   captions and titles n' stuff to the images because a lot of that isn't
-   avaliable in the outputted html
- * all the keys are urls, so it's easy to lookup based on the images
- * @type {Object}
-###
-window.attachment_index = {}
-
-###*
- * put `attachments` into the `attachment_index`
- * @param {[type]} attachments an array of attachments
- * @return {[type]} [description]
-###
-process_attachments = (attachments) ->
-  for attachment in attachments
-    url = attachment['url']
-    delete attachment['url']
-    attachment_index[url] = attachment
-
-
-num_pages_loaded = 0
-total_pages = 2 # not really pages: just number of requests
+are_pages_loaded = false
 pages_loaded = ->
-  # make sure everything is loaded first
-  num_pages_loaded++
-  if num_pages_loaded isnt total_pages
+  if are_pages_loaded
     return
+  else
+    are_pages_loaded = true
 
   $('#loading').remove()
 
@@ -228,89 +207,98 @@ pages_loaded = ->
 
   # change to default page at startup (if there is no hash fragment)
   if Backbone.history.fragment is ''
-    App.Router.navigate('!' + pages.default_page,
+    App.Router.navigate(pages.default_page,
       trigger: true
       replace: true
     )
 
-  gallery() # basically parse the gallery, and spit it back out
-
-  $('.gallery a').fancybox(
-    nextEffect: 'fade'
-    prevEffect: 'fade'
-    padding: 0
-    margin: [15, 15, 40, 15]
-    afterLoad: ->
-      list = $("#links")
-
-      if not list.length
-        list = $('<ul id="links">')
-
-        for i in [0...@group.length]
-          $("<li data-index=\"#{i}\"><label></label></li>").click(->
-            $.fancybox.jumpto( $(@).data('index'))
-          ).appendTo(list)
-        list.appendTo('body')
-
-      list.find('li').removeClass('active').eq( this.index ).addClass('active')
-    beforeClose: ->
-      $("#links").remove()
-  )
-
-  #make the contact form work
-  form = $('.wpcf7 form')[0]
-  $(form).attr('action', BACKEND_URL + $(form).attr('action'))
-  $.wpcf7Init()
-
-  p 'all loaded'
+  console.log 'all loaded'
   window.prerenderReady = true
 
-jsonp("#{BACKEND_URL}/?json=get_page_index", {}, (err, data) ->
-  # loop through the pages
-  for page in data['pages']
-    process_attachments(page['attachments'])
-
-    categories = []
-    for category in page['categories']
-      categories.push 'category-' + category['slug']
-
-    pages.create(
-      slug: page['slug']
-      name: page['title']
-      categories: categories
-    )
-
-    # add the content
-    $("##{page['slug']}_content")[0].innerHTML = page['content']
-    p "loaded page: #{page['title']}"
-
-  pages_loaded()
-)
-
-pages.create(
+blog = pages.create(
   slug: 'blog'
   name: 'Blog'
 )
 
-# get all the content on the homepage as JSON and then call the function
-# with the data
-jsonp("#{BACKEND_URL}/?json=1", {}, (err, data) ->
-  # loop through the data and make a section for each post, and append it to the blog page
-  for post in data['posts']
-    process_attachments(post['attachments'])
+# bleh, manual render
+blog.view.el.innerHTML = ""
+$('nav').after(blog.view.el)
 
-    $('#blog_content').append("""
-    <section>
-      <h1 class="title">#{post['title']}</h1>
-      <p class="post-info">Posted on <span class="date">#{post['date']}</span> by <span class="author">#{post['author']['name']}</span></p>
-      #{post['content']}
-    </section>
-    """)
+API.cache.posts.on 'add', (model) ->
+  blog.view.$el.append(model.view.el)
 
-  p "loaded page: Blog"
+API.cache.pages.on 'add', (model) ->
+  categories = []
+  for category in model.get 'categories'
+    categories.push category.get 'slug'
+
+  pageModel = pages.create(
+    slug: model.get 'slug'
+    name: model.get 'title'
+    categories: categories
+    content: model.get 'content'
+  )
+  $('nav').after(pageModel.view.el)
+
+  # ugh, just manually render
+  pageModel.view.el.innerHTML = """
+    #{pageModel.get 'content'}
+  """
+
+  if model.get('slug') is 'contact'
+    #make the contact form work
+    form = $('.wpcf7 form')[0]
+    $(form).attr('action', API.backendURL + $(form).attr('action'))
+    $.wpcf7Init()
+
+  # basically parse the gallery, and spit it back out
+  gallery = []
+  pageModel.view.$el.find('.gallery').each((i, element) ->
+    gallery[i] = new Gallery.Gallery()
+    $(element).find('a').each((e) ->
+      url = $(@).attr('href')
+      img = API.cache.attachments.findWhere(url: url)
+      console.log img
+      console.log API.cache.attachments
+      gallery[i].add(
+        title: img.get 'title'
+        url: url
+        thumb_url: img.get('images')['thumbnail']['url']
+        caption: img.get 'caption'
+        description: img.get 'description'
+        slug: img.get 'slug'
+      )
+    ).promise().done( ->
+      $(element).replaceWith(gallery[i].view.el)
+    )
+    $(element).find('.gallery a').fancybox(
+      nextEffect: 'fade'
+      prevEffect: 'fade'
+      padding: 0
+      margin: [15, 15, 40, 15]
+      afterLoad: ->
+        list = $("#links")
+
+        if not list.length
+          list = $('<ul id="links">')
+
+          for i in [0...@group.length]
+            $("<li data-index=\"#{i}\"><label></label></li>").click(->
+              $.fancybox.jumpto( $(@).data('index'))
+            ).appendTo(list)
+          list.appendTo('body')
+
+        list.find('li').removeClass('active').eq( this.index ).addClass('active')
+      beforeClose: ->
+        $("#links").remove()
+    )
+  )
+
   pages_loaded()
-)
+
+API.getPosts()
+API.getPages()
 
 $("nav select").change( ->
-  window.location = $(@).find("option:selected").val();
+  window.location = $(@).find("option:selected").val()
 )
