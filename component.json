@@ -2,8 +2,8 @@
   "name": "chazsouthard.com",
   "main": "public/js/main.js",
   "dependencies": {
-    "components/underscore": "*",
-    "components/backbone": "1.1.0",
+    "jashkenas/underscore": "*",
+    "jashkenas/backbone": "1.1.2",
     "components/jquery": "1.11.0",
     "learnboost/jsonp": "*",
     "slang800/wp-json-client": "*",

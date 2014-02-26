@@ -1,8 +1,6 @@
 {
   "name": "underscore",
-  "repo": "components/underscore",
   "description": "JavaScript's functional programming helper library.",
-  "homepage": "http://documentcloud.github.com/underscore/",
   "keywords": [
     "util",
     "functional",
@@ -10,10 +8,12 @@
     "client",
     "browser"
   ],
-  "author": "Jeremy Ashkenas <jeremy@documentcloud.org>",
-  "version": "1.4.4",
+  "repo": "jashkenas/underscore",
   "main": "underscore.js",
   "scripts": [
-    "underscore.js"
-  ]
+    "underscore.js",
+    "underscore-min.js"
+  ],
+  "version": "1.6.0",
+  "license": "MIT"
 }

@@ -239,7 +239,7 @@ API.cache.pages.on 'add', (model) ->
   pageModel = pages.add(
     slug: model.get 'slug'
     name: model.get 'title'
-    categories: (category.get('slug') for category in model.get 'categories')
+    categories: (category['slug'] for category in model.get 'categories')
     content: model.get 'content'
   )
   $('nav').after(pageModel.view.el)

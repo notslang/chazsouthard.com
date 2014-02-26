@@ -8,7 +8,7 @@ class PostView extends Backbone.View
       <h1>#{@model.get 'title'}</h1>
       <p>
         Posted on <span class="date">#{@model.get 'date'}</span>
-        by <span class="author">#{@model.get('author').get('name')}</span>
+        by <span class="author">#{@model.get('author')['name']}</span>
       </p>
       #{@model.get 'content'}
     """
@@ -18,7 +18,7 @@ class PostView extends Backbone.View
 
     categories = []
     for category in @model.get('categories')
-      categories.push category.get 'slug'
+      categories.push category['slug']
     @$el.attr(
       class: categories.join('-category ')
     )
