@@ -1,9 +1,9 @@
 # PhantomJS doesn't support bind yet
 require 'functionbind'
 
-window.$ = require 'jquery'
 _ = require 'underscore'
 Backbone = require 'backbone'
+Backbone.$ = window.$ = require 'jquery'
 jsonp = require 'jsonp'
 Gallery = require './gallery'
 
@@ -29,17 +29,17 @@ $('.share').share(
 )
 
 window._wpcf7 =
-  loaderUrl: BACKEND_URL + '/wp-content/plugins/contact-form-7/images/ajax-loader.gif',
-  sending: "Sending ..."
+  loaderUrl: "#{BACKEND_URL}/wp-content/plugins/contact-form-7/images/ajax-loader.gif",
+  sending: "Sending..."
 
 ###*
  * modify the navbar to highlight the correct current page.
  * this view just manages the navbar at the top of the page
 ###
 class NavView extends Backbone.View
-  el: $('nav')[0] # element already exists in markup
+  tagName: 'nav'
 
-  render: ->
+  render: =>
     page = @model.current_page()
 
     # set the title of the page
@@ -52,9 +52,9 @@ class NavView extends Backbone.View
 
     console.log "(nav) page: #{page.get('name')}"
 
-  added_page: (page_model) ->
-    name = page_model.get('name')
-    slug = page_model.get('slug')
+  added_page: (model) =>
+    name = model.get('name')
+    slug = model.get('slug')
 
     @$el.find('.buttonset').append("""
       <input type="radio" name="nav" value="#{slug}", id="#{slug}_nav")>
@@ -68,7 +68,12 @@ class NavView extends Backbone.View
     """)
 
   initialize: ->
-    _.bindAll @
+    @el.innerHTML = """
+      <a class="logo"></a>
+      <div class="buttonset"></div>
+      <select></select>
+      <div class="share"></div>
+    """
     @model.on('change:selected', @render)
     @model.on('add', @added_page)
 
@@ -113,8 +118,7 @@ class Page extends Backbone.Model
     else
       @get('on_unload').call()
 
-  initialize: ->
-    _.bindAll @
+  initialize: =>
     @on('change:selected', @onchange)
 
     # for page specific init functions
@@ -136,10 +140,8 @@ class PageView extends Backbone.View
     @model.on('change:selected', @render)
     @model.view = @
 
-    slug = @model.get('slug')
-
     @$el.attr(
-      id: "#{slug}-content"
+      id: "#{@model.get 'slug'}-content"
       class: (
         'category-' + category for category in @model.get('categories')
       ).join(' ')
@@ -185,14 +187,15 @@ class PagesCollection extends Backbone.Collection
   current_page: ->
     return @where(selected: true)[0]
 
-  initialize: ->
-    _.bindAll @
+  initialize: =>
     @on("add", @added_page)
 
 #create all the models & views in the application
 window.pages = new PagesCollection()
 window.router = new Router model: pages
 window.navView = new NavView model: pages
+
+$('header').after(navView.el)
 
 are_pages_loaded = false
 pages_loaded = ->
@@ -220,15 +223,13 @@ blog = pages.create(
   name: 'Blog'
 )
 
-# bleh, manual render
-blog.view.el.innerHTML = ""
 $('nav').after(blog.view.el)
 
 API.cache.posts.on 'add', (model) ->
   blog.view.$el.append(model.view.el)
 
 API.cache.pages.on 'add', (model) ->
-  pageModel = pages.create(
+  pageModel = pages.add(
     slug: model.get 'slug'
     name: model.get 'title'
     categories: (category.get('slug') for category in model.get 'categories')
@@ -241,15 +242,22 @@ API.cache.pages.on 'add', (model) ->
     #{pageModel.get 'content'}
   """
 
+  fixGalleries(pageModel)
+
   if model.get('slug') is 'contact'
     #make the contact form work
     form = $('.wpcf7 form')[0]
     $(form).attr('action', API.backendURL + $(form).attr('action'))
     $.wpcf7Init()
 
-  # basically parse the gallery, and spit it back out
+  pages_loaded()
+
+###*
+ * basically parse the gallery, and spit it back out
+###
+fixGalleries = (model) ->
   gallery = []
-  pageModel.view.$el.find('.gallery').each((i, element) ->
+  model.view.$el.find('.gallery').each((i, element) ->
     gallery[i] = new Gallery.Gallery()
     $(element).find('a').each((e) ->
       url = $(@).attr('href')
@@ -282,13 +290,13 @@ API.cache.pages.on 'add', (model) ->
             ).appendTo(list)
           list.appendTo('body')
 
-        list.find('li').removeClass('active').eq( this.index ).addClass('active')
+        list.find('li').removeClass('active').eq(@index).addClass('active')
       beforeClose: ->
         $("#links").remove()
     )
   )
 
-  pages_loaded()
+API.cache.posts.on 'add', fixGalleries
 
 API.getPosts()
 API.getPages()
