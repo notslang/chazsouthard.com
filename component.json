@@ -4,10 +4,11 @@
   "dependencies": {
     "components/underscore": "*",
     "components/backbone": "1.1.0",
-    "components/jquery": "2.0.3",
+    "components/jquery": "1.11.0",
     "learnboost/jsonp": "*",
     "slang800/wp-json-client": "*",
-    "enyo/functionbind": "*"
+    "enyo/functionbind": "*",
+    "paulmillr/console-polyfill": "*"
   },
   "scripts": [
     "public/js/main.js",

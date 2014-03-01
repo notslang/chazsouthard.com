@@ -1,9 +1,12 @@
 # PhantomJS doesn't support bind yet
 require 'functionbind'
 
+#IE8 doesn't have console.log
+require 'console-polyfill'
+
 _ = require 'underscore'
 Backbone = require 'backbone'
-Backbone.$ = window.$ = require 'jquery'
+Backbone.$ = window.$ = window.jQuery = require 'jquery'
 jsonp = require 'jsonp'
 Gallery = require './gallery'
 
@@ -17,7 +20,11 @@ API.cache.posts.on 'add', (model) ->
   new PostView(model: model)
 
 # these only need to be called... no init
-require './flying-focus'
+try
+  require './flying-focus'
+catch e
+  console.warn 'flying-focus didn\'t load'
+
 require './jquery.fancybox'
 require './jquery.form'
 require './contact-form'
