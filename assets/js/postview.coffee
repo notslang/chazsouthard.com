@@ -15,10 +15,7 @@ class PostView extends Backbone.View
 
   initialize: =>
     @model.view = @
-
-    categories = []
-    for category in @model.get('categories')
-      categories.push category['slug']
+    categories = @model.get('categories').pluck('slug')
     @$el.attr(
       class: categories.join('-category ')
     )

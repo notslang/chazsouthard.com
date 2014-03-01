@@ -8,8 +8,8 @@
     "log",
     "debugger"
   ],
+  "main": "debug.js",
   "scripts": [
-    "index.js",
     "debug.js"
   ],
   "dependencies": {}

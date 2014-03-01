@@ -1,9 +1,10 @@
 jsonp = require 'jsonp'
 _ = require 'underscore'
 Backbone = require 'backbone'
+require 'backbone-associations'
 Backbone.LocalStorage = require 'Backbone.localStorage'
 
-class ContentObject extends Backbone.Model
+class ContentObject extends Backbone.AssociatedModel
   defaultFields: []
 
   ###*
@@ -18,30 +19,6 @@ class ContentObject extends Backbone.Model
   ###
   getMissingFields: ->
     _.difference @defaultFields, @ignoredFields, @keys()
-
-
-class Post extends ContentObject
-  defaultFields: [
-    'id'
-    'url'
-    'type'
-    'slug'
-    'status'
-    'title'
-    'title_plain'
-    'content'
-    'excerpt'
-    'date'
-    'modified'
-    'categories'
-    'tags'
-    'author'
-    'comments'
-    'attachments'
-    'comment_count'
-    'comment_status'
-    'custom_fields'
-  ]
 
 
 class Category extends ContentObject
@@ -79,6 +56,15 @@ class Author extends ContentObject
 
 
 class Comment extends ContentObject
+  relations: [
+    {
+      type: Backbone.One
+      key: 'author'
+      relatedModel: Author
+      serialize: ['id']
+    }
+  ]
+
   defaultFields: [
     'id'
     'url'
@@ -145,43 +131,80 @@ class MenuItem extends ContentObject
   ]
 
 
+class Post extends ContentObject
+  relations: [
+    {
+      type: Backbone.One
+      key: 'author'
+      relatedModel: Author
+      serialize: ['id']
+    }
+    {
+      type: Backbone.Many
+      key: 'attachments'
+      relatedModel: Attachment
+      serialize: ['id']
+    }
+    {
+      type: Backbone.Many
+      key: 'comments'
+      relatedModel: Comment
+      serialize: ['id']
+    }
+    {
+      type: Backbone.Many
+      key: 'tags'
+      relatedModel: Tag
+      serialize: ['id']
+    }
+    {
+      type: Backbone.Many
+      key: 'categories'
+      relatedModel: Category
+      serialize: ['id']
+    }
+  ]
+
+  defaultFields: [
+    'id'
+    'url'
+    'type'
+    'slug'
+    'status'
+    'title'
+    'title_plain'
+    'content'
+    'excerpt'
+    'date'
+    'modified'
+    'categories'
+    'tags'
+    'author'
+    'comments'
+    'attachments'
+    'comment_count'
+    'comment_status'
+    'custom_fields'
+  ]
+
 class ObjectCollection extends Backbone.Collection
   ###*
    * @param {WordPress} @wp Used to let the collection interact with other
      collections from the WordPress instance.
-   * @param {String} [@name] The name of the collection. Must be unique within
-     the application. Used for localstorage.
+   * @param {String} [@collectionName] The name of the collection. Must be
+     unique within the application. Used for localstorage.
   ###
   constructor: (@wp, @collectionName) ->
     super()
-    @on 'add', @processObject
-    @on 'change', @saveModel
+    @on 'add', (model) ->
+      if model.relations?
+        for relation in model.relations
+          relation['map'] = @wp.map
+
+    @on 'add change', @saveModel
 
     if @collectionName?
       @localStorage = new Backbone.LocalStorage @collectionName
-
-  ###*
-   * Take an object out of a model replacing it with a reference to the
-     removed field and put the removed field into its own collection
-   * @param {ContentObject} model
-   * @param {String} fieldName The name of the field to abstract.
-   * @param {String} [targetCollectionName=fieldName] The name of the
-     collection to put the removed object into.
-  ###
-  abstractField: (model, fieldName, targetCollectionName) ->
-    if not targetCollectionName? then targetCollectionName = fieldName
-    field = model.get fieldName
-    unless field? then return
-
-    # when adding models, it doesn't matter if it's an array - Backbone deals
-    # with that
-    model.set fieldName, @wp.cache[targetCollectionName].add(field, merge: true)
-
-  ###*
-   * Deal with objects that are inside of the model
-   * @param {ContentObject} model
-  ###
-  processObject: (model) ->
 
   ###*
    * Make the model get saved after it's changed
@@ -194,19 +217,9 @@ class ObjectCollection extends Backbone.Collection
 class Posts extends ObjectCollection
   model: Post
 
-  processObject: (model) =>
-    @abstractField model, 'attachments'
-    @abstractField model, 'categories'
-    @abstractField model, 'tags'
-    @abstractField model, 'author', 'authors'
-    @abstractField model, 'comments'
-
 
 class Categories extends ObjectCollection
   model: Category
-
-  processObject: (model) =>
-    @abstractField model, 'comments'
 
 
 class Tags extends ObjectCollection
@@ -228,24 +241,26 @@ class Attachments extends ObjectCollection
 class MenuItems extends ObjectCollection
   model: MenuItem
 
-  processObject: (model) =>
-    model.set 'children', []
+  constructor: (wp, collectionName) ->
+    super(wp, collectionName)
+    @on 'add', (model) ->
+      model.set 'children', []
 
-    parentId = +model.get('menu_item_parent') # make it an int
-    if parentId isnt 0
-      model.set 'is_root_level', false
+      parentId = +model.get('menu_item_parent') # make it an int
+      if parentId isnt 0
+        model.set 'is_root_level', false
 
-      # Switch from having each MenuItem denote its parent, to having each
-      # list their children (easier to walk). This relies on the post's parent
-      # having already been added... which seems to be the order that
-      # wordpress gives it to us in.
-      parent = @findWhere(ID: parentId)
-      parent.set 'children', parent.get('children').concat(model)
-    else
-      # there's nothing above this menu element
-      model.set 'is_root_level', true
+        # Switch from having each MenuItem denote its parent, to having each
+        # list their children (easier to walk). This relies on the post's parent
+        # having already been added... which seems to be the order that
+        # wordpress gives it to us in.
+        parent = @findWhere(ID: parentId)
+        parent.set 'children', parent.get('children').concat(model)
+      else
+        # there's nothing above this menu element
+        model.set 'is_root_level', true
 
-    model.unset 'menu_item_parent'
+      model.unset 'menu_item_parent'
 
 ###*
  * Lightweight wrapper around MenuItems
@@ -285,6 +300,14 @@ class WordPress
   maxPostsPerRequest: 10
 
   cache: {}
+
+  map: (fids, type) =>
+    for name, collection of @cache
+      if collection.model is type
+        return collection.add(fids, merge: true)
+    console.log type
+    console.log fids
+    throw '`type` didn\'t match the models of any collections'
 
   constructor: (@backendURL) ->
     # these need to be made here to set @wp (`this`) properly

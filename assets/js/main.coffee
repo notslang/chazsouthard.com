@@ -239,7 +239,7 @@ API.cache.pages.on 'add', (model) ->
   pageModel = pages.add(
     slug: model.get 'slug'
     name: model.get 'title'
-    categories: (category['slug'] for category in model.get 'categories')
+    categories: model.get('categories').pluck 'slug'
     content: model.get 'content'
   )
   $('nav').after(pageModel.view.el)
@@ -268,7 +268,7 @@ fixGalleries = (model) ->
     gallery[i] = new Gallery.Gallery()
     $(element).find('a').each((e) ->
       url = $(@).attr('href')
-      img = API.cache.attachments.findWhere(url: url)
+      img = API.cache['attachments'].findWhere(url: url)
       gallery[i].add(
         title: img.get 'title'
         url: url
