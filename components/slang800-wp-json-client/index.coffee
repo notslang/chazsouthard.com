@@ -4,6 +4,16 @@ Backbone = require 'backbone'
 require 'backbone-associations'
 Backbone.LocalStorage = require 'Backbone.localStorage'
 
+map = (fids, type) ->
+  type = if type instanceof Backbone.Collection then type.model else type
+  for name, collection of API.cache
+    if collection.model is type
+      return collection.add(fids, merge: true)
+
+  console.log fids, type
+  throw '`type` didn\'t match the models of any collections'
+
+
 class ContentObject extends Backbone.AssociatedModel
   defaultFields: []
 
@@ -62,6 +72,7 @@ class Comment extends ContentObject
       key: 'author'
       relatedModel: Author
       serialize: ['id']
+      map: map
     }
   ]
 
@@ -138,30 +149,35 @@ class Post extends ContentObject
       key: 'author'
       relatedModel: Author
       serialize: ['id']
+      map: map
     }
     {
       type: Backbone.Many
       key: 'attachments'
       relatedModel: Attachment
       serialize: ['id']
+      map: map
     }
     {
       type: Backbone.Many
       key: 'comments'
       relatedModel: Comment
       serialize: ['id']
+      map: map
     }
     {
       type: Backbone.Many
       key: 'tags'
       relatedModel: Tag
       serialize: ['id']
+      map: map
     }
     {
       type: Backbone.Many
       key: 'categories'
       relatedModel: Category
       serialize: ['id']
+      map: map
     }
   ]
 
@@ -196,10 +212,6 @@ class ObjectCollection extends Backbone.Collection
   ###
   constructor: (@wp, @collectionName) ->
     super()
-    @on 'add', (model) ->
-      if model.relations?
-        for relation in model.relations
-          relation['map'] = @wp.map
 
     @on 'add change', @saveModel
 
@@ -210,7 +222,7 @@ class ObjectCollection extends Backbone.Collection
    * Make the model get saved after it's changed
    * @param {ContentObject} model
   ###
-  saveModel: (model) =>
+  saveModel: (model) ->
     model.save()
 
 
@@ -300,14 +312,6 @@ class WordPress
   maxPostsPerRequest: 10
 
   cache: {}
-
-  map: (fids, type) =>
-    for name, collection of @cache
-      if collection.model is type
-        return collection.add(fids, merge: true)
-    console.log type
-    console.log fids
-    throw '`type` didn\'t match the models of any collections'
 
   constructor: (@backendURL) ->
     # these need to be made here to set @wp (`this`) properly

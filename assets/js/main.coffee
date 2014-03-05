@@ -181,7 +181,7 @@ class PagesCollection extends Backbone.Collection
     if page?
       page.set(selected: true)
     else
-      console.log "#{page_slug} doesn't exist, redirecting to #{@default_page}..."
+      console.warn "#{page_slug} doesn't exist, redirecting to #{@default_page}..."
 
       router.navigate(@default_page,
         trigger: true
