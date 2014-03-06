@@ -207,16 +207,10 @@ class ObjectCollection extends Backbone.Collection
   ###*
    * @param {WordPress} @wp Used to let the collection interact with other
      collections from the WordPress instance.
-   * @param {String} [@collectionName] The name of the collection. Must be
-     unique within the application. Used for localstorage.
   ###
-  constructor: (@wp, @collectionName) ->
+  constructor: (@wp) ->
     super()
-
     @on 'add change', @saveModel
-
-    if @collectionName?
-      @localStorage = new Backbone.LocalStorage @collectionName
 
   ###*
    * Make the model get saved after it's changed
@@ -253,8 +247,8 @@ class Attachments extends ObjectCollection
 class MenuItems extends ObjectCollection
   model: MenuItem
 
-  constructor: (wp, collectionName) ->
-    super(wp, collectionName)
+  constructor: (wp) ->
+    super(wp)
     @on 'add', (model) ->
       model.set 'children', []
 
@@ -315,14 +309,17 @@ class WordPress
 
   constructor: (@backendURL) ->
     # these need to be made here to set @wp (`this`) properly
-    @cache.posts = new Posts(this, 'posts')
-    @cache.pages = new Posts(this, 'pages')
-    @cache.categories = new Categories(this, 'categories')
-    @cache.tags = new Tags(this, 'tags')
-    @cache.authors = new Authors(this, 'authors')
-    @cache.comments = new Comments(this, 'comments')
-    @cache.attachments = new Attachments(this, 'attachments')
-    @cache.menus = new Menus(this, 'menus')
+    @cache.attachments = new Attachments(this)
+    @cache.posts = new Posts(this)
+    @cache.pages = new Posts(this)
+    @cache.categories = new Categories(this)
+    @cache.tags = new Tags(this)
+    @cache.authors = new Authors(this)
+    @cache.comments = new Comments(this)
+    @cache.menus = new Menus(this)
+
+    for name, collection of @cache
+      collection.localStorage = new Backbone.LocalStorage name
 
   makeURL: (params) ->
     query = []
@@ -345,7 +342,7 @@ class WordPress
      added to the collections.
   ###
   loadCache: ->
-    for collection in @cache
+    for name, collection of @cache
       collection.fetch()
 
   ###*

@@ -305,6 +305,7 @@ fixGalleries = (model) ->
 
 API.cache.posts.on 'add', fixGalleries
 
+API.loadCache()
 API.getPosts()
 API.getPages()
 
