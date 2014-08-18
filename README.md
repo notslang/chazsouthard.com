@@ -2,7 +2,7 @@
 
 The portfolio of Chaz Southard
 
-*a roots.cx project that integrates with WordPress. 
+*a roots.cx project that integrates with WordPress.
 
 ##how to compile
 - install [roots](http://roots.cx): `sudo npm install roots -g`
