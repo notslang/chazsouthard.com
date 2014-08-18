@@ -1,43 +1,30 @@
-# roots v2.1.0
-roots = require 'roots'
-fs = require 'fs'
-Builder = require 'component-builder'
-ComponentCoffee = require 'component-coffee'
+axis = require 'axis'
+rupture = require 'rupture'
+autoprefixer = require 'autoprefixer-stylus'
+dynamicContent  = require 'dynamic-content'
+moment = require 'moment'
 
-roots.compiler.on('finished', (err) ->
-  builder = new Builder('./')
-  builder.use(ComponentCoffee)
-  builder.build((err, res) ->
-    if err
-      console.log(err)
-    else
-      fs.writeFile("./public/main.js", res.require + res.js, (err) ->
-        if err
-          console.log(err)
-        else
-          console.log('built public/main.js')
-      )
-  )
-)
+module.exports =
+  ignores: ['readme.md', '**/layout.*', '**/_*', '.gitignore']
+  server:
+    clean_urls: true
+  stylus:
+    use: [axis(), rupture(), autoprefixer()]
+  extensions: [
+    dynamicContent()
+  ]
+  locals:
+    sort: (ary, opts) ->
+      opts ||= {}
+      opts.by = opts.by || 'order'
 
-# Files in this list will not be compiled - minimatch supported
-ignore_files: ['_*', 'readme*', '.gitignore', '.DS_Store', '*.log']
-ignore_folders: ['.git']
+      if opts.order == 'asc'
+        fn = (a, b) -> if (a[opts.by] > b[opts.by]) then -1 else 1
+      else
+        fn = (a, b) -> if (a[opts.by] < b[opts.by]) then -1 else 1
+      if opts.by == 'date'
+        fn = (a,b) -> if (new Date(a[opts.by]) > new Date(b[opts.by])) then -1 else 1
+      if opts.fn then fn = opts.fn
+      ary.sort(fn)
 
-# Layout file config
-# `default` applies to all views. Override for specific
-# views as seen below.
-layouts:
-  default: 'layout.jade'
-  # 'special_view.jade': 'special_layout.jade'
-
-# Locals will be made available on every page. They can be
-# variables or (coffeescript) functions.
-locals:
-  title: 'Chaz Southard'
-
-stylus:
-  plugins: [module.require('nib')]
-
-# Precompiled template path, see http://roots.cx/docs/#precompile
-# templates: 'views/templates'
+    formatDate: (d) -> moment(d).format('YYYY-MM-DD')

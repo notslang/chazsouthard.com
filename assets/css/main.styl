@@ -36,14 +36,6 @@ body, html
 strong
 	font-weight: 600
 
-header
-	group()
-	padding 0
-	max-width 1200px
-
-	.title
-		font-size 3em
-
 //basic typography
 nav, h1, h2, h3, h4, h5, h6
 	font-family: 'Yanone Kaffeesatz', sans-serif
@@ -64,14 +56,14 @@ nav
 	line-height logo_height
 	font-size regular_margin * 2
 
-	.logo, select, .buttonset label, .share
+	.logo, a, .share
 		display inline-block
 		animation-name: fadeInDown
 		animation-iteration-count: 1
 		animation-timing-function: ease-in
 		animation-duration: 0.5s
 
-	select, .buttonset label, .share
+	select, a, .share
 		height 30px
 
 	select
@@ -79,21 +71,11 @@ nav
 		background gray
 		min-width 90px
 
-	// switch to a select box for small devices
-	@media screen and (max-width: 500px)
-		select
-			display inline-block
-
-		.buttonset
-			display none
-
-	label
+	a
 		text-transform uppercase
 		color white
 		font-weight bold
-
-		a
-			padding 5px
+		padding 5px
 
 	.share
 		line-height normal
