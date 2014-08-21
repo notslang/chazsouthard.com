@@ -19,12 +19,6 @@ API.cache.posts.on 'add', (model) ->
   #used to create the view for a post after it has been added
   new PostView(model: model)
 
-# these only need to be called... no init
-try
-  require './flying-focus'
-catch e
-  console.warn 'flying-focus didn\'t load'
-
 require './jquery.fancybox'
 require './jquery.form'
 require './contact-form'
@@ -34,10 +28,6 @@ $('.share').share(
   url: 'http://chazsouthard.com'
   text: 'The portfolio of Chaz Southard'
 )
-
-window._wpcf7 =
-  loaderUrl: "#{BACKEND_URL}/wp-content/plugins/contact-form-7/images/ajax-loader.gif",
-  sending: "Sending..."
 
 ###*
  * modify the navbar to highlight the correct current page.
@@ -75,12 +65,6 @@ class NavView extends Backbone.View
     """)
 
   initialize: ->
-    @el.innerHTML = """
-      <a class="logo"></a>
-      <div class="buttonset"></div>
-      <select></select>
-      <div class="share"></div>
-    """
     @model.on('change:selected', @render)
     @model.on('add', @added_page)
 
