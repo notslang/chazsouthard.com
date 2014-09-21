@@ -8,44 +8,38 @@ I was fortunate and privileged to be able to  organize a curated  and [juried]
 
 <div class="gallery">
   <figure>
-    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="http://198.199.72.158/wp-content/uploads/2013/11/IMG_2754.jpg" title="IMG_2754">
-      <img src="http://198.199.72.158/wp-content/uploads/2013/11/IMG_2754-320x320.jpg">
-      <figcaption>IMG_2754</figcaption>
+    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="/content/boston-exhibit-2013/1.jpg">
+      <img src="/content/boston-exhibit-2013/1.jpg">
     </a>
   </figure>
   <figure>
-    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="http://198.199.72.158/wp-content/uploads/2013/11/IMG_2753.jpg" title="IMG_2753">
-      <img src="http://198.199.72.158/wp-content/uploads/2013/11/IMG_2753-320x320.jpg">
-      <figcaption>IMG_2753</figcaption>
+    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="/content/boston-exhibit-2013/2.jpg">
+      <img src="/content/boston-exhibit-2013/2.jpg">
     </a>
   </figure>
   <figure>
-    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="http://198.199.72.158/wp-content/uploads/2013/11/IMG_2752.jpg" title="IMG_2752">
-      <img src="http://198.199.72.158/wp-content/uploads/2013/11/IMG_2752-320x320.jpg">
-      <figcaption>IMG_2752</figcaption>
+    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="/content/boston-exhibit-2013/3.jpg">
+      <img src="/content/boston-exhibit-2013/3.jpg">
     </a>
   </figure>
   <figure>
-    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="http://198.199.72.158/wp-content/uploads/2013/11/IMG_2751.jpg" title="IMG_2751">
-      <img src="http://198.199.72.158/wp-content/uploads/2013/11/IMG_2751-320x320.jpg">
-      <figcaption>IMG_2751</figcaption>
+    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="/content/boston-exhibit-2013/4.jpg">
+      <img src="/content/boston-exhibit-2013/4.jpg">
     </a>
   </figure>
   <figure>
-    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="http://198.199.72.158/wp-content/uploads/2013/11/Main-Gallery-2.jpg" title="Main Gallery 2">
-      <img src="http://198.199.72.158/wp-content/uploads/2013/11/Main-Gallery-2-320x320.jpg">
-      <figcaption>Main Gallery 2</figcaption>
+    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="/content/boston-exhibit-2013/5.jpg">
+      <img src="/content/boston-exhibit-2013/5.jpg">
     </a>
   </figure>
   <figure>
-    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="http://198.199.72.158/wp-content/uploads/2013/11/IMG_2750.jpg" title="IMG_2750">
-      <img src="http://198.199.72.158/wp-content/uploads/2013/11/IMG_2750-320x320.jpg">
-      <figcaption>IMG_2750</figcaption>
+    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="/content/boston-exhibit-2013/6.jpg">
+      <img src="/content/boston-exhibit-2013/6.jpg">
     </a>
   </figure>
   <figure>
-    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="http://198.199.72.158/wp-content/uploads/2013/11/IMG_2749.jpg" title="Listening Pines">
-      <img src="http://198.199.72.158/wp-content/uploads/2013/11/IMG_2749-320x320.jpg">
+    <a class="fancybox" rel="6c34f8479f3e4219bd7c5c5f378270ec" href="/content/boston-exhibit-2013/7.jpg" title="Listening Pines">
+      <img src="/content/boston-exhibit-2013/7.jpg">
       <figcaption>Listening Pines</figcaption>
     </a>
   </figure>
